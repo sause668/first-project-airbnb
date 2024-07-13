@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const apiRouter = require('./api');
+
+//connect api routes
+router.use('/api', apiRouter);
 
 // Add a XSRF-TOKEN cookie
 router.get("/api/csrf/restore", (req, res) => {
