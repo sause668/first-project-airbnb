@@ -10,19 +10,71 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Spot.belongsTo(models.User);
+      Spot.hasMany(models.Booking);
+      Spot.belongsToMany(
+        models.User,
+        {
+          through: models.Booking,
+          foreignKey: 'spotId',
+          otherKey: 'userId',
+
+        }
+      );
+      Spot.hasMany(models.Review);
+      Spot.belongsToMany(
+        models.User,
+        {
+          through: models.Review,
+          foreignKey: 'spotId',
+          otherKey: 'userId'
+        }
+      );
+      Spot.hasMany(models.SpotImage);
     }
   }
   Spot.init({
-    ownerId: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    city: DataTypes.STRING,
-    country: DataTypes.STRING,
+    ownerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [5, 100]
+      }
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [2, 50]
+      }
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [2, 50]
+      }
+    },
     lat: DataTypes.DECIMAL,
     lng: DataTypes.DECIMAL,
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 50]
+      }
+    },
+    description: {
+      type: DataTypes.TEXT
+    },
+    price: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Spots',
