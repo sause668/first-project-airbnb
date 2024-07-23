@@ -9,7 +9,7 @@ module.exports = {
     typeValidation: true
   },
   production: {
-    use_env_variable: 'postgresql://kamara:3NYsk6OIiyjafVAfQ2PNwBadVjhlqSAy@dpg-cqe03ehu0jms7392gk80-a.virginia-postgres.render.com/airbnb_project_b7z0',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     seederStorage: 'sequelize',
     dialectOptions: {
