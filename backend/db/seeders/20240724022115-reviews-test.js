@@ -1,6 +1,6 @@
 'use strict';
 
-const { User, Spot, Booking, Review, ReviewImage, SpotImage } = require('../models');
+const { User, Spot } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -21,7 +21,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     const testSpot = await Spot.findOne({where: {name: 'da spot'}});
-    
+
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {

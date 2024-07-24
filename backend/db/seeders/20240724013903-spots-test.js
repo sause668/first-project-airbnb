@@ -1,5 +1,5 @@
 'use strict';
-const { User, Spot, Booking, Review, ReviewImage, SpotImage } = require('../models');
+const { User } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {

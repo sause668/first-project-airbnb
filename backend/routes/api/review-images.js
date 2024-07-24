@@ -5,7 +5,7 @@ const router = express.Router();
 // const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
-const { ReviewImage } = require('../db/models');
+const { ReviewImage } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Delete an existing image for a Review.
