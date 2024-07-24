@@ -1,6 +1,6 @@
 'use strict';
 
-const { User, Spot, Booking, Review, ReviewImage, SpotImage } = require('../models');
+const { Spot } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up (queryInterface, Sequelize) {
     const testSpot = await Spot.findOne({where: {name: 'da spot'}});
-    
+
     await testSpot.createSpotImage({
       url: '/dope/shit',
       preview: true
