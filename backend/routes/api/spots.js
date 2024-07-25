@@ -1,16 +1,51 @@
 const express = require('express');
 const router = express.Router();
-// const pagination = require('../utils/pagination');
-// const { Sequelize, DataTypes } = require('sequelize');
-// const sequelize = new Sequelize('sqlite::memory:');
+const pagination = require('../../utils/pagination');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
-const { Spot } = require('../../db/models');
+const { Spot, Review, SpotImage } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Returns all the spots
 router.get('/', async (req, res, next) => {
+    const spotsAll = await Spot.findAll({
+        subQuery: false,
+        attributes: {
+            include: [
+                [
+                    Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+                    'avgRating'
+                ],
+                [
+                    sequelize.literal(`(
+                        SELECT SpotImages.url
+                        FROM SpotImages
+                        JOIN Spots ON Spots.id = SpotImages.spotId
+                        WHERE
+                            SpotImages.spotId = Spots.id
+                            AND
+                            SpotImages.preview = true
+                    )`),
+                    'previewImage',
+                ],
+            ]
+        },
+        include: {
+            model: Review,
+            required: false,
+            attributes: []
+        },
+        group: ['Spot.id'],
+        // where
+        // order: [['name', 'ASC']],
+        // limit,
+        // offset
+    });
+
     
+    res.json(spotsAll);
 });
 
 // Returns all the spots owned by the current user.
