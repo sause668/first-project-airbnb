@@ -226,13 +226,42 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
 
 // Updates and returns an existing spot.
-router.put('/:spotId', async (req, res, next) => {
-    
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+    // Deconstruct variables from body and params
+    const { spotId } = req.params;
+    const { address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    // Query, edit, and save specified spot
+    const spotEdit = await Spot.findOne({where: {id: spotId}});
+
+    spotEdit.set({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    });
+
+    await spotEdit.save();
+
+    res.json(spotEdit);
 });
 
 // Deletes an existing spot.
-router.delete('/:spotId', async (req, res, next) => {
-    
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    // Deconstruct spotId from params
+    const { spotId } = req.params;
+
+    // Query and delete specified spot
+    const spotDelete = await Spot.findOne({where: {id: spotId}});
+    console.log('bah');
+    await spotDelete.destroy();
+
+    res.json({message: "Successfully deleted"});
 });
 
 

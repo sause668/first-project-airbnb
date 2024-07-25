@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Spot.belongsTo(models.User, { as: 'Owner', foreignKey: 'ownerId'});
-      Spot.hasMany(models.Booking, { foreignKey: 'spotId', onDelete: 'CASCADE',  hooks: true });
+      Spot.hasMany(models.Booking, { foreignKey: 'spotId'});
       Spot.belongsToMany(
         models.User,
         {
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
         }
       );
-      Spot.hasMany(models.Review, { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true });
+      Spot.hasMany(models.Review, { foreignKey: 'spotId'});
       Spot.belongsToMany(
         models.User,
         {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
           otherKey: 'userId'
         }
       );
-      Spot.hasMany(models.SpotImage, { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true });
+      Spot.hasMany(models.SpotImage, { foreignKey: 'spotId'});
     }
   }
   Spot.init({
