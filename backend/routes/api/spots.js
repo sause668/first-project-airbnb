@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const pagination = require('../../utils/pagination');
-const { requireAuth }  = require('../../utils/auth')
+const { requireAuth }  = require('../../utils/auth');
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
-const { Spot, Review, SpotImage, User } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Returns all the spots
@@ -163,7 +163,26 @@ router.get('/:spotId/bookings', async (req, res, next) => {
 
 // Returns all the reviews that belong to a spot specified by id.
 router.get('/:spotId/reviews', async (req, res, next) => {
-    
+    const {spotId} = req.params;
+
+    // Query reviews based on spot
+    const reviewsSpot = await Review.findAll({
+        where: {spotId},
+
+        // Include user and review images
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    });
+
+    res.json(reviewsSpot);
 });
 
 
@@ -199,8 +218,23 @@ router.post('/:spotId/bookings', async (req, res, next) => {
 });
 
 // Create and return a new review for a spot specified by id.
-router.post('/:spotId/reviews', async (req, res, next) => {
-    
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {spotId} = req.params;
+    const {review, stars} = req.body;
+
+    //Query spot based on spotId
+    const spot = await Spot.findOne({where: {id: spotId}});
+
+    //Create new review
+    const reviewNew = await spot.createReview({
+        userId: user.id,
+        spotId,
+        review,
+        stars
+    });
+
+    res.json(reviewNew);
 });
 
 // Create and return a new image for a spot specified by id.
@@ -258,7 +292,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
     // Query and delete specified spot
     const spotDelete = await Spot.findOne({where: {id: spotId}});
-    console.log('bah');
+    
     await spotDelete.destroy();
 
     res.json({message: "Successfully deleted"});
