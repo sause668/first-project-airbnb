@@ -10,22 +10,54 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const testSpot = await Spot.findOne({where: {name: 'da spot'}});
+    const starkQuarters = await Spot.findOne({where: {name: 'Stark Quarters'}});
+    const crowShack = await Spot.findOne({where: {name: 'Crow Shack'}});
+    const redKeep = await Spot.findOne({where: {name: 'Red Keep'}});
+    const dragonRoom = await Spot.findOne({where: {name: 'Dragon Room'}});
 
-    await testSpot.createSpotImage({
-      url: '/dope/shit',
+    await starkQuarters.createSpotImage({
+      url: '/images/god-wood.jpg',
       preview: true
     });
+    await starkQuarters.createSpotImage({
+      url: '/images/dinning-room.jpg',
+      preview: true
+    });
+    await redKeep.createSpotImage({
+      url: '/images/iron-throne.jpg',
+      preview: true
+    });
+    await redKeep.createSpotImage({
+      url: '/images/city-view.jpg',
+      preview: true
+    });
+    await redKeep.createSpotImage({
+      url: '/images/royal-chambers.jpg',
+      preview: true
+    });
+    await dragonRoom.createSpotImage({
+      url: '/images/dragon.jpg',
+      preview: true
+    });
+    await dragonRoom.createSpotImage({
+      url: '/images/war-room.jpg',
+      preview: true
+    });
+    await crowShack.createSpotImage({
+      url: '/images/wall.jpg',
+      preview: true
+    });
+    
   },
 
   async down (queryInterface, Sequelize) {
-    const testSpot = await Spot.findOne({where: {name: 'da spot'}});
+    // const testSpot = await Spot.findOne({where: {name: 'da spot'}});
     
-    const Op = Sequelize.Op;
+    // const Op = Sequelize.Op;
 
     options.tableName = 'SpotImages';
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [testSpot.id] }
+      // spotId: { [Op.in]: [testSpot.id] }
     }, {});
   }
 };

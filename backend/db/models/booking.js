@@ -26,6 +26,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Booking',
+    scopes: {
+      userBookings(userId) {
+        return {
+          where: {userId}
+        }
+      }
+    }
   });
   return Booking;
 };

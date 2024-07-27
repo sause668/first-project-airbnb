@@ -59,8 +59,20 @@ module.exports = (sequelize, DataTypes) => {
         len: [2, 50]
       }
     },
-    lat: DataTypes.DECIMAL,
-    lng: DataTypes.DECIMAL,
+    lat: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        min: -90,
+        max: 90
+      }
+    },
+    lng: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        min: -180,
+        max: 180
+      }
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -69,15 +81,26 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     description: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     price: {
       type: DataTypes.DECIMAL(10,2),
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: 0
+      }
     }
   }, {
     sequelize,
     modelName: 'Spot',
+    scopes: {
+      ownerSpots(ownerId) {
+        return {
+          where: {ownerId}
+        }
+      }
+    }
   });
   return Spot;
 };
