@@ -28,7 +28,23 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    startDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        // is: /^d{4}-d{2}-d{2}$/
+        isDate: true,
+      }
+    },
+    endDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        // is: /^d{4}-d{2}-d{2}$/
+        isDate: true
+      }
+    },
   }, {
     sequelize,
     modelName: 'Booking',

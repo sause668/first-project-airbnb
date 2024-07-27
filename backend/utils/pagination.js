@@ -6,7 +6,7 @@ const pagination = (req, res, next) => {
     // Use query params for page & size
     let {page, size} = req.query;
     page = page ? page:1;
-    size = size ? size:10;
+    size = size ? size:20;
 
     // Calculate limit and offset
     // Special case to return all students (page=0, size=0)

@@ -21,7 +21,7 @@ module.exports = {
     });
     await starkQuarters.createSpotImage({
       url: '/images/dinning-room.jpg',
-      preview: true
+      preview: false
     });
     await redKeep.createSpotImage({
       url: '/images/iron-throne.jpg',
@@ -29,11 +29,11 @@ module.exports = {
     });
     await redKeep.createSpotImage({
       url: '/images/city-view.jpg',
-      preview: true
+      preview: false
     });
     await redKeep.createSpotImage({
       url: '/images/royal-chambers.jpg',
-      preview: true
+      preview: false
     });
     await dragonRoom.createSpotImage({
       url: '/images/dragon.jpg',
@@ -41,7 +41,7 @@ module.exports = {
     });
     await dragonRoom.createSpotImage({
       url: '/images/war-room.jpg',
-      preview: true
+      preview: false
     });
     await crowShack.createSpotImage({
       url: '/images/wall.jpg',

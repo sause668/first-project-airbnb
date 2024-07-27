@@ -6,11 +6,14 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
-const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Returns all the spots
-router.get('/', async (req, res, next) => {
+router.get('/', pagination, async (req, res, next) => {
+    const limit = res.locals.limit;
+    const offset = res.locals.offset;
+
     const spotsAll = await Spot.findAll({
         subQuery: false,
         attributes: {
@@ -45,8 +48,8 @@ router.get('/', async (req, res, next) => {
         // For future queries
         // where
         // order: [['name', 'ASC']],
-        // limit,
-        // offset
+        limit,
+        offset
     });
 
     
@@ -157,8 +160,33 @@ router.get('/:spotId', async (req, res, next) => {
 });
 
 // Return all the bookings for a spot specified by id.
-router.get('/:spotId/bookings', async (req, res, next) => {
-    
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {spotId} = req.params;
+
+    const spotUserOwned = await Spot.findOne({
+        where: {
+            id: spotId,
+            ownerId: user.id
+        },
+        attributes: ['id']
+    })
+
+    const bookingsSpot = (spotUserOwned) ? 
+        await Booking.findAll({
+            where: {spotId},
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        }):
+        await Booking.findAll({
+            where: {spotId},
+            attributes: ['spotId', 'startDate', 'endDate']
+        });
+
+
+    res.json(bookingsSpot);
 });
 
 // Returns all the reviews that belong to a spot specified by id.
@@ -213,8 +241,19 @@ router.post('/', requireAuth, async (req, res, next) => {
 });
 
 // Create and return a new booking from a spot specified by id.
-router.post('/:spotId/bookings', async (req, res, next) => {
-    
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {spotId} = req.params;
+    const {startDate, endDate} = req.body;
+
+    const bookingNew = await Booking.create({
+        spotId,
+        userId: user.id,
+        startDate,
+        endDate
+    });
+
+    res.json(bookingNew);
 });
 
 // Create and return a new review for a spot specified by id.

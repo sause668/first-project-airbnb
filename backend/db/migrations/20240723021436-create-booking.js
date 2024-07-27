@@ -34,6 +34,24 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
+      startDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        validate: {
+          // is: /^d{4}-d{2}-d{2}$/
+          isDate: true,
+          // isAfter: Sequelize.literal("CURRENT_DATE")
+        }
+      },
+      endDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        validate: {
+          // is: /^d{4}-d{2}-d{2}$/
+          isDate: true,
+          // isAfter: Sequelize.literal("CURRENT_DATE")
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

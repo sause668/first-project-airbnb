@@ -22,37 +22,59 @@ module.exports = {
     const dragonRoom = await Spot.findOne({where: {name: 'Dragon Room'}});
     
     await john.createBooking({
-      spotId: redKeep.id
+      spotId: redKeep.id,
+      startDate: '2024-08-18',
+      endDate: '2024-08-21'
     })
     await john.createBooking({
-      spotId: dragonRoom.id
+      spotId: dragonRoom.id,
+      startDate: '2024-09-05',
+      endDate: '2024-09-10'
     })
     await sansa.createBooking({
-      spotId: starkQuarters.id
+      spotId: starkQuarters.id,
+      startDate: '2024-10-04',
+      endDate: '2024-10-16'
     })
     await sansa.createBooking({
-      spotId: redKeep.id
+      spotId: redKeep.id,
+      startDate: '2024-11-15',
+      endDate: '2024-11-21'
     })
     await daenerys.createBooking({
-      spotId: starkQuarters.id
+      spotId: starkQuarters.id,
+      startDate: '2024-09-12',
+      endDate: '2024-09-24'
     })
     await daenerys.createBooking({
-      spotId: redKeep.id
+      spotId: redKeep.id,
+      startDate: '2024-10-01',
+      endDate: '2024-10-08'
     })
     await jamie.createBooking({
-      spotId: starkQuarters.id
+      spotId: starkQuarters.id,
+      startDate: '2024-09-14',
+      endDate: '2024-09-20'
     })
     await jamie.createBooking({
-      spotId: dragonRoom.id
+      spotId: dragonRoom.id,
+      startDate: '2024-08-26',
+      endDate: '2024-08-29'
     })
     await tyrion.createBooking({
-      spotId: redKeep.id
+      spotId: redKeep.id,
+      startDate: '2024-09-17',
+      endDate: '2024-10-15'
     })
     await tyrion.createBooking({
-      spotId: crowShack.id
+      spotId: crowShack.id,
+      startDate: '2024-08-14',
+      endDate: '2024-08-15'
     })
     await tyrion.createBooking({
-      spotId: dragonRoom.id
+      spotId: dragonRoom.id,
+      startDate: '2024-10-20',
+      endDate: '2024-11-25'
     })
     
   },

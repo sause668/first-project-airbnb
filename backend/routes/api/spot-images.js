@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAuth }  = require('../../utils/auth');
 // const pagination = require('../utils/pagination');
 // const { Sequelize, DataTypes } = require('sequelize');
 // const sequelize = new Sequelize('sqlite::memory:');
@@ -9,8 +10,14 @@ const { SpotImage } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Delete an existing image for a Spot.
-router.delete('/ImageId', async (req, res, next) => {
-    
+router.delete('/:imageId', requireAuth, async (req, res, next) => {
+    const {imageId} = req.params;
+
+    const SpotImageDelete = await SpotImage.findOne({where: {id: imageId}});
+
+    await SpotImageDelete.destroy();
+
+    res.json({message: "Successfully deleted"});
 });
 
 
