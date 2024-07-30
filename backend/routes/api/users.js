@@ -13,7 +13,7 @@ const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
@@ -30,11 +30,10 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post('/', validateSignup, async (req, res) => {
+router.post('/', async (req, res) => {
         const { firstName, lastName, email, password, username } = req.body;
         const hashedPassword = bcrypt.hashSync(password);
         const user = await User.create({ firstName, lastName, email, username, hashedPassword });
-        console.log(user);
         const safeUser = {
             id: user.id,
             firstName: user.firstName,
@@ -45,6 +44,7 @@ router.post('/', validateSignup, async (req, res) => {
 
         await setTokenCookie(res, safeUser);
 
+        res.status(201);
         return res.json({
             user: safeUser
         });

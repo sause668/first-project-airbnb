@@ -32,14 +32,27 @@ module.exports = (sequelize, DataTypes) => {
     },
     review: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: {
+          args: [0, 500],
+          msg: 'Review text can be no more than 500 characters'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Review text is required'
+        }
+      }
     },
     stars: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 0,
-        max: 5
+        range(value) {
+          if (value < -1 || value > 5) {
+            throw Error('Stars must be an integer from 1 to 5')
+          }
+        }
       }
     }
   }, {
@@ -48,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       userReviews(userId) {
         return {
-          where: {userId}
+          where: {userId: userId}
         }
       }
     }

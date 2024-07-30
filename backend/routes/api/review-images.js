@@ -15,6 +15,12 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
     const reviewImageDelete = await ReviewImage.findOne({where: {id: imageId}});
 
+    if (!reviewImageDelete) {
+        const err = new Error("Review Image couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
     await reviewImageDelete.destroy();
 
     res.json({message: "Successfully deleted"});

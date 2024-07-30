@@ -47,7 +47,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ]
     });
 
-    res.json(reviewsUser);
+    res.json({'Reviews': reviewsUser});
 });
 
 // Create and return a new image for a review specified by id.
@@ -56,7 +56,22 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const {url} = req.body;
 
     // Query review based on reviewId
-    const review = await Review.findOne({where: {id: reviewId}});
+    const review = await Review.findOne({
+        where: {id: reviewId},
+        include: ReviewImage,
+    });
+
+    if (!review) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+    
+    if (review['ReviewImages'].length >= 10) {
+        const err = new Error("Maximum number of images for this resource was reached");
+        err.status = 403;
+        return next(err);
+    }
 
     // Add new review image
     const reviewImageNew = await review.createReviewImage({
@@ -69,6 +84,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         url: reviewImageNew.url
     }
 
+    res.status(201);
     res.json(safeReviewImage);
 });
 
@@ -78,6 +94,12 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
     const {review, stars} = req.body;
 
     const reviewEdit = await Review.findOne({where: {id: reviewId}});
+
+    if (!reviewEdit) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
 
     reviewEdit.set({
         review,
@@ -94,6 +116,12 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     const {reviewId} = req.params;
 
     const reviewDelete = await Review.findOne({where: {id: reviewId}});
+
+    if (!reviewDelete) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
 
     await reviewDelete.destroy();
 

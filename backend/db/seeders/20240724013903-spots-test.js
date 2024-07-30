@@ -17,6 +17,7 @@ module.exports = {
     await john.createSpot({
       address: "26 N King's Road",
       city: 'Winterfell',
+      state: 'NL',
       country: 'Westeros',
       lat: 54.607314,
       lng: -2.179626,
@@ -28,6 +29,7 @@ module.exports = {
     await john.createSpot({
       address: "12 N King's Road",
       city: 'Castle Black',
+      state: 'NL',
       country: 'Westeros',
       lat: 56.687560,
       lng: -2.617918,
@@ -39,6 +41,7 @@ module.exports = {
     await jamie.createSpot({
       address: '32 Main Street',
       city: "King's Landing",
+      state: 'CL',
       country: 'Westeros',
       lat: 51.483250,
       lng: -0.327463,
@@ -50,6 +53,7 @@ module.exports = {
     await daenerys.createSpot({
       address: '82 Dracarys Place',
       city: 'Dragonstone',
+      state: 'WL',
       country: 'Westeros',
       lat: 51.808488,
       lng: 1.039471,

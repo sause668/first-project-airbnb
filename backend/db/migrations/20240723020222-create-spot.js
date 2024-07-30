@@ -39,6 +39,13 @@ module.exports = {
           len: [2, 50]
         }
       },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          len: [2, 2]
+        }
+      },
       country: {
         type: Sequelize.STRING,
         allowNull: false,

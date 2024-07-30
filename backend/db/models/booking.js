@@ -33,16 +33,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
-        // is: /^d{4}-d{2}-d{2}$/
         isDate: true,
+        notInPast(value) {
+          if (new Date(value) <= new Date()) {
+            throw new Error('startDate cannot be in the past');
+          }
+        }
       }
     },
     endDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
-        // is: /^d{4}-d{2}-d{2}$/
-        isDate: true
+        isDate: true,
+        notBeforeStartDate(value) {
+          if (value <= this.startDate) {
+            throw new Error('endDate cannot be on or before startDate');
+          }
+        }
       }
     },
   }, {
@@ -51,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       userBookings(userId) {
         return {
-          where: {userId}
+          where: {ownerId: userId}
         }
       }
     }

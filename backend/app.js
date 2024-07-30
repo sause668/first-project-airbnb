@@ -65,10 +65,24 @@ app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
   if (err instanceof ValidationError) {
     let errors = {};
+    let userExists = false;
+    
     for (let error of err.errors) {
       errors[error.path] = error.message;
     }
-    err.title = 'Validation error';
+
+    if (errors.email === 'email must be unique') {
+      errors.email = 'User with that email already exists';
+      userExists = true;
+    }
+
+    if (errors.username === 'username must be unique') {
+      errors.username = 'User with that email already exists';
+      userExists = true;
+    }
+
+    err.message = (userExists) ? 'User already exists':'Validation error';
+    err.status = (userExists) ? 500:400;
     err.errors = errors;
   }
   next(err);
@@ -77,13 +91,21 @@ app.use((err, _req, _res, next) => {
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
-  res.json({
-    title: err.title || 'Server Error',
+
+  const errRes = {
     message: err.message,
-    errors: err.errors,
-    stack: isProduction ? null : err.stack
-  });
+    errors: err.errors
+  };
+
+  if (err.title === 'Server Error') {
+    errRes.title = 'Server Error'
+  }
+
+  if (isProduction) {
+    errRes.stack = err.stack
+  }
+
+  res.json(errRes);
 });
 
 //export app
