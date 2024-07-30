@@ -40,6 +40,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 // Update and return an existing booking.
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const {bookingId} = req.params;
     const {startDate, endDate} = req.body;
 
@@ -52,14 +53,31 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
+    if (bookingEdit.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
+
     if (bookingEdit.endDate < new Date()) {
         const err = new Error("Past bookings can't be modified");
         err.status = 403;
         return next(err);
     }
 
-    const bookings = await Booking.findAll({where: {spotId: bookingEdit.spotId}})
-    console.log(bookings)
+    const bookings = await Booking.findAll({
+        where: {
+            [Op.and]: [
+                {
+                    spotId: bookingEdit.spotId
+                },
+                {id: {
+                    [Op.ne]: bookingEdit.id
+                }
+            }
+            ]
+        }
+    });
     const newStart = new Date(startDate);
     const newEnd = new Date(endDate);
     let errorFlag = false;
@@ -102,13 +120,27 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
 // Delete an existing booking.
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const {bookingId} = req.params;
 
-    const bookingDelete = await Booking.findOne({where: {id: bookingId}});
+    const bookingDelete = await Booking.findOne({
+        where: {id: bookingId},
+        include: {
+            model: Spot,
+            attributes: ['ownerId']
+        }
+    });
 
     if (!bookingDelete) {
         const err = new Error("Booking couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (bookingDelete.userId !== user.id || 
+        bookingDelete['Spot'].ownerId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
 

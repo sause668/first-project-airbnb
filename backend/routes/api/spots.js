@@ -11,6 +11,7 @@ const { Op } = require('sequelize');
 
 // Returns all the spots
 router.get('/', pagination, async (req, res, next) => {
+    const {page, size} = req.query;
     const limit = res.locals.limit;
     const offset = res.locals.offset;
 
@@ -45,9 +46,12 @@ router.get('/', pagination, async (req, res, next) => {
         limit,
         offset
     });
-
     
-    res.json({'Spots': spotsAll});
+    res.json({
+        'Spots': spotsAll,
+        page: page || 1,
+        size: size || 20
+    });
 });
 
 // Returns all the spots owned by the current user.
@@ -247,6 +251,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
+    if (spot.ownerId === user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
+
     const newStart = new Date(startDate);
     const newEnd = new Date(endDate);
     let errorFlag = false;
@@ -302,7 +312,6 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
-        err.errors = errors;
         return next(err);
     }
 
@@ -332,6 +341,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
 
 // Create and return a new image for a spot specified by id.
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const { spotId } = req.params;
     const { url, preview} = req.body;
 
@@ -340,6 +350,12 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (spot.ownerId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
 
@@ -361,16 +377,21 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
 // Updates and returns an existing spot.
 router.put('/:spotId', requireAuth, async (req, res, next) => {
-    // Deconstruct variables from body and params
+    const {user} = req;
     const { spotId } = req.params;
     const { address, city, state, country, lat, lng, name, description, price} = req.body;
 
-    // Query, edit, and save specified spot
     const spotEdit = await Spot.findOne({where: {id: spotId}});
 
     if (!spotEdit) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+    
+    if (spotEdit.ownerId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
 
@@ -393,15 +414,20 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 
 // Deletes an existing spot.
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
-    // Deconstruct spotId from params
+    const {user} = req;
     const { spotId } = req.params;
 
-    // Query and delete specified spot
     const spotDelete = await Spot.findOne({where: {id: spotId}});
 
     if (!spotDelete) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (spotDelete.ownerId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
     

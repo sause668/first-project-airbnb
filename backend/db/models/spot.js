@@ -71,8 +71,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: {
-          args: [2, 2],
-          msg: 'State must be 2 characters'
+          args: [2, 50],
+          msg: 'State must be 2 to 50 characters'
         },
         notEmpty: {
           args: [true],

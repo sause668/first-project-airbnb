@@ -43,7 +43,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [2, 2]
+          len: [2, 50]
         }
       },
       country: {

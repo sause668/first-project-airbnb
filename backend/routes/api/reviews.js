@@ -52,6 +52,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 // Create and return a new image for a review specified by id.
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const {reviewId} = req.params;
     const {url} = req.body;
 
@@ -64,6 +65,12 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     if (!review) {
         const err = new Error("Review couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (review.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
     
@@ -90,6 +97,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
 // Update and return an existing review.
 router.put('/:reviewId', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const {reviewId} = req.params;
     const {review, stars} = req.body;
 
@@ -98,6 +106,12 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
     if (!reviewEdit) {
         const err = new Error("Review couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (reviewEdit.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
 
@@ -113,6 +127,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
 // Delete an existing review.
 router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const {user} = req;
     const {reviewId} = req.params;
 
     const reviewDelete = await Review.findOne({where: {id: reviewId}});
@@ -120,6 +135,12 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     if (!reviewDelete) {
         const err = new Error("Review couldn't be found");
         err.status = 404;
+        return next(err);
+    }
+
+    if (reviewDelete.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
         return next(err);
     }
 
