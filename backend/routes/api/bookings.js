@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth }  = require('../../utils/auth');
-// const pagination = require('../utils/pagination');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)

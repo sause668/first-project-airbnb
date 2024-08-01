@@ -1,22 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth }  = require('../../utils/auth');
-// const pagination = require('../utils/pagination');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
 const { Review, Spot, ReviewImage, User } = require('../../db/models');
-const { Op } = require('sequelize');
 
 // Returns all the reviews written by the current user.
 router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
 
-    // Query reviews by userId
     const reviewsUser = await Review.findAll({
         where: {userId: user.id},
-        // Include User, Spot and ReviewImages associated with Review
         include: [
             {
                 model: User,
@@ -56,7 +52,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     const {reviewId} = req.params;
     const {url} = req.body;
 
-    // Query review based on reviewId
     const review = await Review.findOne({
         where: {id: reviewId},
         include: ReviewImage,
@@ -80,7 +75,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    // Add new review image
     const reviewImageNew = await review.createReviewImage({
         reviewId,
         url

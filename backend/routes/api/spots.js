@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const pagination = require('../../utils/pagination');
 const { requireAuth }  = require('../../utils/auth');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
-const { Op } = require('sequelize');
 
 // Returns all the spots
 router.get('/', pagination, async (req, res, next) => {
@@ -185,11 +184,8 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         return next(err);
     }
 
-    // Query reviews based on spot
     const reviewsSpot = await Review.findAll({
         where: {spotId},
-
-        // Include user and review images
         include: [
             {
                 model: User,

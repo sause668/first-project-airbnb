@@ -1,13 +1,10 @@
 const express = require('express');
 
 const pagination = (req, res, next) => {
-
-    // Use query params for page & size
     let {page, size} = req.query;
     page = page || 1;
     size = size || 20;
 
-    // Calculate limit and offset
     let limit;
     let offset;
     if (page == 0 && size == 0) {

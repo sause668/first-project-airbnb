@@ -71,6 +71,7 @@ app.use((err, _req, _res, next) => {
       errors[error.path] = error.message;
     }
 
+    //New message for non unique usernames anf emails
     if (errors.email === 'email must be unique') {
       errors.email = 'User with that email already exists';
       userExists = true;
