@@ -3,7 +3,7 @@
 
 // Import environment variables
 require('dotenv').config();
-
+console.log('bah')
 const { port } = require('../config');
 
 const app = require('../app');
