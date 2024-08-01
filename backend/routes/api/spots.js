@@ -4,6 +4,7 @@ const pagination = require('../../utils/pagination');
 const { requireAuth }  = require('../../utils/auth');
 const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
+const { QueryTypes } = require('sequelize');
 
 // Import model(s)
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
@@ -13,6 +14,8 @@ router.get('/', pagination, async (req, res, next) => {
     const {page, size} = req.query;
     const limit = res.locals.limit;
     const offset = res.locals.offset;
+
+    console.log(Sequelize.col('SpotImages.url'));
 
     const spotsAll = await Spot.findAll({
         subQuery: false,
@@ -26,21 +29,27 @@ router.get('/', pagination, async (req, res, next) => {
                     sequelize.literal(`(
                         SELECT SpotImages.url
                         FROM SpotImages
-                        JOIN Spots ON Spots.id = SpotImages.spotId
                         WHERE
-                            SpotImages.spotId = Spots.id
+                            spotId = Spot.id
                             AND
-                            SpotImages.preview = true
+                            preview = true
                     )`),
                     'previewImage',
                 ],
             ]
         },
-        include: {
-            model: Review,
-            required: false,
-            attributes: []
-        },
+        include: [
+            {
+                model: Review,
+                required: false,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                required: false,
+                attributes: []
+            },
+        ],
         group: ['Spot.id'],
         limit,
         offset
@@ -69,24 +78,34 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     'avgRating'
                 ],
                 [
+                    sequelize.fn(`MAX`,Sequelize.col('SpotImages.url')),
+                    'previewImage'
+                ],
+                [
                     sequelize.literal(`(
                         SELECT SpotImages.url
                         FROM SpotImages
-                        JOIN Spots ON Spots.id = SpotImages.spotId
                         WHERE
-                            SpotImages.spotId = Spots.id
+                            spotId = Spot.id
                             AND
-                            SpotImages.preview = true
+                            preview = true
                     )`),
                     'previewImage',
                 ],
             ]
         },
-        include: {
-            model: Review,
-            required: false,
-            attributes: []
-        },
+        include: [
+            {
+                model: Review,
+                required: false,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                required: false,
+                attributes: []
+            },
+        ],
         group: ['Spot.id'],
         where
     });

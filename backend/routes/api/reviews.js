@@ -25,11 +25,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
                         sequelize.literal(`(
                             SELECT SpotImages.url
                             FROM SpotImages
-                            JOIN Spots ON Spots.id = SpotImages.spotId
                             WHERE
-                                SpotImages.spotId = Spots.id
+                                spotId = Spot.id
                                 AND
-                                SpotImages.preview = true
+                                preview = true
                         )`),
                         'previewImage',
                     ]],
