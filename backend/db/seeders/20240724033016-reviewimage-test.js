@@ -10,24 +10,50 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const testReview = await Review.findOne({
-      where: {stars: 5},
+    const starkQuartersReview = await Review.findOne({
+      where: {review: 'Not my taste.  Everything looks old.'},
+      attributes: ['id']
+    });
+    const redKeepReview = await Review.findOne({
+      where: {review: 'Fancy but not like home'},
+      attributes: ['id']
+    });
+    const dragonRoomReview = await Review.findOne({
+      where: {review: 'Love the setting and the company lol'},
+      attributes: ['id']
+    });
+    const crowShackReview = await Review.findOne({
+      where: {review: 'I did it.  I saw the wall.  Now I want to go home.'},
       attributes: ['id']
     });
     
-    await testReview.createReviewImage({
-      url: '/hot/shit'
+    
+    await starkQuartersReview.createReviewImage({
+      url: '/images/crypt.jpg'
     });
+    await redKeepReview.createReviewImage({
+      url: '/images/iron-throne.jpg'
+    });
+    await dragonRoomReview.createReviewImage({
+      url: '/images/deanerys.jpg'
+    });
+    await crowShackReview.createReviewImage({
+      url: '/images/wall.jpg'
+    });
+    
   },
 
   async down (queryInterface, Sequelize) {
-    const testReview = await Review.findOne({where: {stars: 5}});
+    // const testReview = await Review.findOne({
+    //   where: {stars: 5},
+    //   attributes: ['id']
+    // });
     
-    const Op = Sequelize.Op;
+    // const Op = Sequelize.Op;
 
     options.tableName = 'ReviewImages';
     return queryInterface.bulkDelete(options, {
-      reviewId: { [Op.in]: [testReview.id] }
+      // reviewId: { [Op.in]: [testReview.id] }
     }, {});
   }
 };

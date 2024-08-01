@@ -39,6 +39,13 @@ module.exports = {
           len: [2, 50]
         }
       },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          len: [2, 50]
+        }
+      },
       country: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -47,10 +54,22 @@ module.exports = {
         }
       },
       lat: {
-        type: Sequelize.DECIMAL
+        type: {
+          type: Sequelize.DECIMAL,
+          validate: {
+            min: -90,
+            max: 90
+          }
+        }
       },
       lng: {
-        type: Sequelize.DECIMAL
+        type: {
+          type: Sequelize.DECIMAL,
+          validate: {
+            min: -180,
+            max: 180
+          }
+        }
       },
       name: {
         type: Sequelize.STRING,
@@ -60,11 +79,15 @@ module.exports = {
         }
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       price: {
         type: Sequelize.DECIMAL(10,2),
-        allowNull: false
+        allowNull: false,
+        validate: {
+          min: 0
+        }
       },
       createdAt: {
         allowNull: false,

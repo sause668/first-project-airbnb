@@ -1,31 +1,145 @@
 const express = require('express');
 const router = express.Router();
-// const pagination = require('../utils/pagination');
-// const { Sequelize, DataTypes } = require('sequelize');
-// const sequelize = new Sequelize('sqlite::memory:');
+const { requireAuth }  = require('../../utils/auth');
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
-const { Review } = require('../../db/models');
-const { Op } = require('sequelize');
+const { Review, Spot, ReviewImage, User } = require('../../db/models');
 
 // Returns all the reviews written by the current user.
-router.get('/current', async (req, res, next) => {
-    
+router.get('/current', requireAuth, async (req, res, next) => {
+    const { user } = req;
+
+    const reviewsUser = await Review.findAll({
+        where: {userId: user.id},
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: Spot,
+                attributes: {
+                    include: [[
+                        sequelize.literal(`(
+                            SELECT SpotImages.url
+                            FROM SpotImages
+                            WHERE
+                                spotId = Spot.id
+                                AND
+                                preview = true
+                        )`),
+                        'previewImage',
+                    ]],
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    });
+
+    res.json({'Reviews': reviewsUser});
 });
 
 // Create and return a new image for a review specified by id.
-router.post('/:reviewId/images', async (req, res, next) => {
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {reviewId} = req.params;
+    const {url} = req.body;
+
+    const review = await Review.findOne({
+        where: {id: reviewId},
+        include: ReviewImage,
+    });
+
+    if (!review) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (review.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
     
+    if (review['ReviewImages'].length >= 10) {
+        const err = new Error("Maximum number of images for this resource was reached");
+        err.status = 403;
+        return next(err);
+    }
+
+    const reviewImageNew = await review.createReviewImage({
+        reviewId,
+        url
+    });
+    
+    const safeReviewImage = {
+        id: reviewImageNew.id,
+        url: reviewImageNew.url
+    }
+
+    res.status(201);
+    res.json(safeReviewImage);
 });
 
 // Update and return an existing review.
-router.put('/:reviewId', async (req, res, next) => {
-    
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {reviewId} = req.params;
+    const {review, stars} = req.body;
+
+    const reviewEdit = await Review.findOne({where: {id: reviewId}});
+
+    if (!reviewEdit) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (reviewEdit.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
+
+    reviewEdit.set({
+        review,
+        stars
+    });
+
+    await reviewEdit.save();
+
+    res.json(reviewEdit);
 });
 
 // Delete an existing review.
-router.delete('/:reviewId', async (req, res, next) => {
-    
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const {user} = req;
+    const {reviewId} = req.params;
+
+    const reviewDelete = await Review.findOne({where: {id: reviewId}});
+
+    if (!reviewDelete) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (reviewDelete.userId !== user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
+
+    await reviewDelete.destroy();
+
+    res.json({message: 'Successfully deleted'});
 });
 
 

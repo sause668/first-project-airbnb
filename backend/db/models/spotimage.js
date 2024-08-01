@@ -30,7 +30,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'SpotImage',
+    modelName: 'SpotImage'
+    // scopes: {
+    //   StopImagesOnly(spotId) {
+    //     const { Spot } = require('../models');
+    //     return {
+    //       where: {spotId},
+    //       include: {model: Spot}
+    //     }
+    //   }
+    // }
   });
   return SpotImage;
 };
