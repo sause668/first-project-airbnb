@@ -25,13 +25,13 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [5, 100]
-        }
-      },
+      // address: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     len: [5, 100]
+      //   }
+      // },
       // city: {
       //   type: Sequelize.STRING,
       //   allowNull: false,
@@ -82,13 +82,13 @@ module.exports = {
       //   type: Sequelize.TEXT,
       //   allowNull: false
       // },
-      // price: {
-      //   type: Sequelize.DECIMAL(10, 2),
-      //   allowNull: false,
-      //   validate: {
-      //     min: 0
-      //   }
-      // },
+      price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+        validate: {
+          min: 0
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
