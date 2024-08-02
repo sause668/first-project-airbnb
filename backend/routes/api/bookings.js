@@ -19,17 +19,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 subQuery: false,
                 attributes: {
                     subQuery: false,
-                    // include: [
-                    //     [
-                    //         Sequelize.col('SpotImages.url'),
-                    //         'previewImage'
-                    //     ]
-                    // ],
+                    include: [
+                        [
+                            Sequelize.col('SpotImages.url'),
+                            'previewImage'
+                        ]
+                    ],
                     exclude: ['createdAt', 'updatedAt']
                 },
                 include: {
                     model: SpotImage,
-                    attributes: ['url'],
+                    attributes: [],
                     where: {
                         preview: true
                     }
