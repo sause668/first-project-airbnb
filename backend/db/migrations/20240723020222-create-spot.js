@@ -55,7 +55,7 @@ module.exports = {
       },
       lat: {
         type: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.INTEGER
           // validate: {
           //   min: -90,
           //   max: 90
@@ -64,7 +64,7 @@ module.exports = {
       },
       lng: {
         type: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.INTEGER
           // validate: {
           //   min: -180,
           //   max: 180
