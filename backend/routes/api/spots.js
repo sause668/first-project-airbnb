@@ -120,18 +120,18 @@ router.get('/:spotId', async (req, res, next) => {
     
     const spot = await Spot.findOne({
         subQuery: false,
-        // attributes: {
-        //     include: [
-        //         [
-        //             Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
-        //             'numReviews'
-        //         ],
-        //         [
-        //             Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
-        //             'avgRating'
-        //         ]
-        //     ]
-        // },
+        attributes: {
+            include: [
+                [
+                    Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
+                    'numReviews'
+                ],
+                [
+                    Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+                    'avgRating'
+                ]
+            ]
+        },
         include: [
             {
                 model: User,
