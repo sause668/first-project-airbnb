@@ -53,15 +53,15 @@ module.exports = {
           len: [2, 50]
         }
       },
-      lat: {
-        type: {
-          type: Sequelize.DECIMAL,
-          validate: {
-            min: -90,
-            max: 90
-          }
-        }
-      },
+      // lat: {
+      //   type: {
+      //     type: Sequelize.DECIMAL,
+      //     validate: {
+      //       min: -90,
+      //       max: 90
+      //     }
+      //   }
+      // },
       // lng: {
       //   type: {
       //     type: Sequelize.DECIMAL,
@@ -71,24 +71,24 @@ module.exports = {
       //     }
       //   }
       // },
-      // name: {
-      //   type: Sequelize.STRING,
-      //   allowNull: false,
-      //   validate: {
-      //     len: [3, 50]
-      //   }
-      // },
-      // description: {
-      //   type: Sequelize.TEXT,
-      //   allowNull: false
-      // },
-      // price: {
-      //   type: Sequelize.DECIMAL(10, 2),
-      //   allowNull: false,
-      //   validate: {
-      //     min: 0
-      //   }
-      // },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          len: [3, 50]
+        }
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+        validate: {
+          min: 0
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
