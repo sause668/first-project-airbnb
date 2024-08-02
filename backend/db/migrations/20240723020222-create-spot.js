@@ -78,10 +78,10 @@ module.exports = {
           len: [3, 50]
         }
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
+      // description: {
+      //   type: Sequelize.TEXT,
+      //   allowNull: false
+      // },
       // price: {
       //   type: Sequelize.DECIMAL(10, 2),
       //   allowNull: false,
