@@ -62,15 +62,15 @@ module.exports = {
       //     }
       //   }
       // },
-      // lng: {
-      //   type: {
-      //     type: Sequelize.DECIMAL,
-      //     validate: {
-      //       min: -180,
-      //       max: 180
-      //     }
-      //   }
-      // },
+      lng: {
+        type: {
+          type: Sequelize.DECIMAL,
+          validate: {
+            min: -180,
+            max: 180
+          }
+        }
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
