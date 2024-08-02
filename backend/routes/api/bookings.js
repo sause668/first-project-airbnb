@@ -21,7 +21,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     subQuery: false,
                     include: [
                         [
-                            Sequelize.col('Spot->SpotImages.url'),
+                            Sequelize.literal('Spot->SpotImages.url'),
                             'previewImage'
                         ]
                     ],
