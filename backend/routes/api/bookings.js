@@ -17,7 +17,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             model: Spot,
             subQuery: false,
             attributes: {
-                subQuery: false,
+                // subQuery: false,
                 include: [
                     [
                         Sequelize.col('SpotImages.url'),
@@ -33,7 +33,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     preview: true
                 }
             },
-            group: ['SpotImages.id']
+            // group: ['SpotImages.id']
         },
         // group: [''],
     });
