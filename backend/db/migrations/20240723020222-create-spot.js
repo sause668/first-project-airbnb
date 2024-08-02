@@ -71,13 +71,13 @@ module.exports = {
           }
         }
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [3, 50]
-        }
-      },
+      // name: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     len: [3, 50]
+      //   }
+      // },
       // description: {
       //   type: Sequelize.TEXT,
       //   allowNull: false
