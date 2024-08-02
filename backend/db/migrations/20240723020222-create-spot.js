@@ -23,8 +23,8 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-      //   onDelete: 'cascade'
-      // },
+        onDelete: 'cascade'
+      },
       // address: {
       //   type: Sequelize.STRING,
       //   allowNull: false,
