@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
           through: models.Booking,
           foreignKey: 'spotId',
           otherKey: 'userId',
-
         }
       );
       Spot.hasMany(models.Review, { foreignKey: 'spotId'});
@@ -47,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Address must be between 5 be 100 characters'
         },
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'Address is required'
         },
       }
@@ -61,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'City must be between 4 be 60 characters'
         },
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'City is required'
         },
       }
@@ -75,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'State must be 2 to 50 characters'
         },
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'State is required'
         },
       }
@@ -89,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Country must be between 4 be 60 characters'
         },
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'Country is required'
         },
       }
@@ -123,7 +122,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Name must be between 3 be 50 characters'
         },
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'Description is required'
         },
       }
@@ -137,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       validate: {
         notEmpty: {
-          args: true,
+          args: [true],
           msg: 'Description is required'
         }
       }
@@ -147,7 +146,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         min: {
-          args: 0,
+          args: [0],
           msg: 'Price per day must be a positive number'
         }
       }

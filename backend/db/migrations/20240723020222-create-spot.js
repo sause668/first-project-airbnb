@@ -28,30 +28,30 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          len: [5, 100]
-        }
+        // validate: {
+        //   len: [5, 100]
+        // }
       },
       city: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          len: [2, 50]
-        }
+        // validate: {
+        //   len: [2, 50]
+        // }
       },
       state: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          len: [2, 50]
-        }
+        // validate: {
+        //   len: [2, 50]
+        // }
       },
       country: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          len: [2, 50]
-        }
+        // validate: {
+        //   len: [2, 50]
+        // }
       },
       lat: {
         type: {
@@ -74,9 +74,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          len: [3, 50]
-        }
+        // validate: {
+        //   len: [3, 50]
+        // }
       },
       description: {
         type: Sequelize.TEXT,
