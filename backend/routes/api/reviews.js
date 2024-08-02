@@ -4,7 +4,7 @@ const { requireAuth }  = require('../../utils/auth');
 const { Sequelize } = require('sequelize');
 
 // Import model(s)
-const { Review, Spot, ReviewImage, User } = require('../../db/models');
+const { Review, Spot, ReviewImage, User, SpotImage } = require('../../db/models');
 
 // Returns all the reviews written by the current user.
 router.get('/current', requireAuth, async (req, res, next) => {
