@@ -102,7 +102,7 @@ app.use((err, _req, res, _next) => {
     errRes.title = 'Server Error'
   }
 
-  if (isProduction) {
+  if (!isProduction) {
     errRes.stack = err.stack
   }
 
