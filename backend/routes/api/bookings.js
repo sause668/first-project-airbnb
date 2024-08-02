@@ -45,7 +45,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             //     }
             // },
         ],
-        // group: ['Spot'],
+        group: ['Spot->SpotImages.id'],
     });
 
     res.json({'Bookings': bookingsUser});
