@@ -134,18 +134,18 @@ router.get('/:spotId', async (req, res, next) => {
         },
         include: [
             {
-                model: Review,
-                required: false,
-                attributes: []
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
             },
             {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview']
             },
             {
-                model: User,
-                as: 'Owner',
-                attributes: ['id', 'firstName', 'lastName']
+                model: Review,
+                required: false,
+                attributes: []
             }
         ],
         group: ['Spot.id'],
