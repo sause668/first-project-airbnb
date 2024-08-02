@@ -21,7 +21,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     subQuery: false,
                     include: [
                         [
-                            Sequelize.literal('Spot->SpotImages.url'),
+                            Sequelize.literal('"Spot->SpotImages"."url"'),
                             'previewImage'
                         ]
                     ],
@@ -45,7 +45,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             //     }
             // },
         ],
-        group: ['Spot->SpotImages.id'],
+        // group: ['Spot->SpotImages.id'],
     });
 
     res.json({'Bookings': bookingsUser});
