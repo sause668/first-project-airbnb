@@ -97,6 +97,19 @@ router.get('/:spotId', async (req, res, next) => {
     where.id = parseInt(spotId);
     
     const spot = await Spot.findOne({
+        subQuery: false,
+        attributes: {
+            include: [
+                [
+                    Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
+                    'numReviews'
+                ],
+                [
+                    Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+                    'avgRating'
+                ]
+            ]
+        },
         include: [
             {
                 model: User,
@@ -113,6 +126,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: []
             }
         ],
+        group: ['Spot.id', 'Users.id', 'SpotImages.id'],
         where
     });
 
@@ -122,37 +136,23 @@ router.get('/:spotId', async (req, res, next) => {
         return next(err);
     }
 
-    const spot2 = await Spot.findOne({
-        subQuery: false,
-        attributes: {
-            include: [
-                [
-                    Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
-                    'numReviews'
-                ],
-                [
-                    Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
-                    'avgRating'
-                ]
-            ]
-        },
-        include: [
-            {
-                model: Review,
-                required: false,
-                attributes: []
-            }
-        ],
-        group: ['Spot.id'],
-        where
-    });
+    // const spot2 = await Spot.findOne({
+    //     include: [
+    //         {
+    //             model: Review,
+    //             required: false,
+    //             attributes: []
+    //         }
+    //     ],
+    //     where
+    // });
 
-    const spotMain = spot.toJSON()
+    // const spotMain = spot.toJSON()
 
-    spotMain.numReviews = spot2.toJSON().numReviews;
-    spotMain.numReviews = spot2.toJSON().avgRating;
+    // spotMain.numReviews = spot2.toJSON().numReviews;
+    // spotMain.numReviews = spot2.toJSON().avgRating;
 
-    res.json(spot2);
+    res.json(spot);
 });
 
 // Return all the bookings for a spot specified by id.
