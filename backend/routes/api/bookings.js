@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth }  = require('../../utils/auth');
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
 
 // Import model(s)
 const { Booking, Spot } = require('../../db/models');
@@ -18,7 +17,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             model: Spot,
             attributes: {
                 include: [[
-                    sequelize.literal(`(
+                    Sequelize.literal(`(
                         SELECT SpotImages.url
                         FROM SpotImages
                         WHERE

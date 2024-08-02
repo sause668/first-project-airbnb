@@ -3,8 +3,6 @@ const router = express.Router();
 const pagination = require('../../utils/pagination');
 const { requireAuth }  = require('../../utils/auth');
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-const { QueryTypes } = require('sequelize');
 
 // Import model(s)
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
@@ -26,7 +24,7 @@ router.get('/', pagination, async (req, res, next) => {
                     'avgRating'
                 ],
                 [
-                    sequelize.literal(`(
+                    Sequelize.literal(`(
                         SELECT SpotImages.url
                         FROM SpotImages
                         WHERE
@@ -78,11 +76,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     'avgRating'
                 ],
                 [
-                    sequelize.fn(`MAX`,Sequelize.col('SpotImages.url')),
+                    Sequelize.fn(`MAX`,Sequelize.col('SpotImages.url')),
                     'previewImage'
                 ],
                 [
-                    sequelize.literal(`(
+                    Sequelize.literal(`(
                         SELECT SpotImages.url
                         FROM SpotImages
                         WHERE
