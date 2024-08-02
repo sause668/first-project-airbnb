@@ -119,19 +119,19 @@ router.get('/:spotId', async (req, res, next) => {
     where.id = parseInt(spotId);
     
     const spot = await Spot.findOne({
-        // subQuery: false,
-        attributes: {
-            include: [
-                [
-                    Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
-                    'numReviews'
-                ],
-                [
-                    Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
-                    'avgRating'
-                ]
-            ]
-        },
+        subQuery: false,
+        // attributes: {
+        //     include: [
+        //         [
+        //             Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')),
+        //             'numReviews'
+        //         ],
+        //         [
+        //             Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+        //             'avgRating'
+        //         ]
+        //     ]
+        // },
         include: [
             {
                 model: User,
@@ -148,7 +148,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: []
             }
         ],
-        group: ['Spot.id'],
+        // group: ['Spot.id'],
         where
     });
 
