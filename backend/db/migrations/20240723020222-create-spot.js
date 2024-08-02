@@ -54,14 +54,14 @@ module.exports = {
         }
       },
       lat: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
         validate: {
           min: -90,
           max: 90
         }
       },
       lng: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
         validate: {
           min: -180,
           max: 180

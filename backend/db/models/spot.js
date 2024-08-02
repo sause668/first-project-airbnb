@@ -94,7 +94,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lat: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       validate: {
         rangeLat(value) {
           if (value < -90 || value > 90) {
@@ -104,7 +104,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       validate: {
         rangeLng(value) {
           if (value < -180 || value > 180) {
