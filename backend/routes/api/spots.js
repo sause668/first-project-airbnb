@@ -23,17 +23,17 @@ router.get('/', pagination, async (req, res, next) => {
                     Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
                     'avgRating'
                 ],
-                [
-                    Sequelize.literal(`(
-                        SELECT SpotImages.url
-                        FROM Spots
-                        WHERE
-                            spotId = Spot.id
-                            AND
-                            preview = true
-                    )`),
-                    'previewImage',
-                ],
+                // [
+                //     Sequelize.literal(`(
+                //         SELECT SpotImages.url
+                //         FROM Spots
+                //         WHERE
+                //             spotId = Spot.id
+                //             AND
+                //             preview = true
+                //     )`),
+                //     'previewImage',
+                // ],
             ]
         },
         include: [
@@ -79,17 +79,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     Sequelize.fn(`MAX`,Sequelize.col('SpotImages.url')),
                     'previewImage'
                 ],
-                [
-                    Sequelize.literal(`(
-                        SELECT SpotImages.url
-                        FROM SpotImages
-                        WHERE
-                            spotId = Spot.id
-                            AND
-                            preview = true
-                    )`),
-                    'previewImage',
-                ],
+                // [
+                //     Sequelize.literal(`(
+                //         SELECT SpotImages.url
+                //         FROM SpotImages
+                //         WHERE
+                //             spotId = Spot.id
+                //             AND
+                //             preview = true
+                //     )`),
+                //     'previewImage',
+                // ],
             ]
         },
         include: [
@@ -119,7 +119,7 @@ router.get('/:spotId', async (req, res, next) => {
     where.id = parseInt(spotId);
     
     const spot = await Spot.findOne({
-        subQuery: false,
+        // subQuery: false,
         attributes: {
             include: [
                 [
