@@ -23,17 +23,6 @@ router.get('/', pagination, async (req, res, next) => {
                     Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
                     'avgRating'
                 ],
-                // [
-                //     Sequelize.literal(`(
-                //         SELECT SpotImages.url
-                //         FROM Spots
-                //         WHERE
-                //             spotId = Spot.id
-                //             AND
-                //             preview = true
-                //     )`),
-                //     'previewImage',
-                // ],
             ]
         },
         include: [
@@ -44,8 +33,10 @@ router.get('/', pagination, async (req, res, next) => {
             },
             {
                 model: SpotImage,
-                required: false,
-                attributes: []
+                attributes: ['url'],
+                where: {
+                    preview: true
+                }
             },
         ],
         group: ['Spot.id'],
@@ -74,22 +65,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 [
                     Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
                     'avgRating'
-                ],
-                [
-                    Sequelize.fn(`MAX`,Sequelize.col('SpotImages.url')),
-                    'previewImage'
-                ],
-                // [
-                //     Sequelize.literal(`(
-                //         SELECT SpotImages.url
-                //         FROM SpotImages
-                //         WHERE
-                //             spotId = Spot.id
-                //             AND
-                //             preview = true
-                //     )`),
-                //     'previewImage',
-                // ],
+                ]
             ]
         },
         include: [
@@ -100,8 +76,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: SpotImage,
-                required: false,
-                attributes: []
+                attributes: ['url'],
+                where: {
+                    preview: true
+                }
             },
         ],
         group: ['Spot.id'],
@@ -119,6 +97,32 @@ router.get('/:spotId', async (req, res, next) => {
     where.id = parseInt(spotId);
     
     const spot = await Spot.findOne({
+        include: [
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName'],
+            },
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview'],
+            },
+            {
+                model: Review,
+                required: false,
+                attributes: []
+            }
+        ],
+        where
+    });
+
+    if (!spot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    const spot2 = await Spot.findOne({
         subQuery: false,
         attributes: {
             include: [
@@ -134,17 +138,6 @@ router.get('/:spotId', async (req, res, next) => {
         },
         include: [
             {
-                model: User,
-                as: 'Owner',
-                attributes: ['id', 'firstName', 'lastName'],
-                group: ['Owner.id']
-            },
-            {
-                model: SpotImage,
-                attributes: ['id', 'url', 'preview'],
-                group: ['SpotImage.id']
-            },
-            {
                 model: Review,
                 required: false,
                 attributes: []
@@ -154,13 +147,12 @@ router.get('/:spotId', async (req, res, next) => {
         where
     });
 
-    if (!spot) {
-        const err = new Error("Spot couldn't be found");
-        err.status = 404;
-        return next(err);
-    }
+    const spotMain = spot.toJSON()
 
-    res.json(spot);
+    spotMain.numReviews = spot2.toJSON().numReviews;
+    spotMain.numReviews = spot2.toJSON().avgRating;
+
+    res.json(spotMain);
 });
 
 // Return all the bookings for a spot specified by id.
