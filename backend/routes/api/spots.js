@@ -43,7 +43,7 @@ router.get('/', pagination, async (req, res, next) => {
                 }
             },
         ],
-        group: ['Spot.id'],
+        group: ['Spot.id', 'SpotImages.url'],
         limit,
         offset
     });
