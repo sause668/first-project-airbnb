@@ -4,7 +4,7 @@ const { requireAuth }  = require('../../utils/auth');
 const { Sequelize } = require('sequelize');
 
 // Import model(s)
-const { Booking, Spot } = require('../../db/models');
+const { Booking, Spot, SpotImage } = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Return all the bookings that the current user has made.
@@ -12,12 +12,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const {user} = req;
 
     const bookingsUser = await Booking.findAll({
-        
         where: {userId: user.id},
         include: {
             model: Spot,
             subQuery: false,
             attributes: {
+                subQuery: false,
                 include: [
                     [
                         Sequelize.col('SpotImages.url'),

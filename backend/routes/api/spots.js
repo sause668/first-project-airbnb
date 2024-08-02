@@ -144,22 +144,6 @@ router.get('/:spotId', async (req, res, next) => {
         return next(err);
     }
 
-    // const spot2 = await Spot.findOne({
-    //     include: [
-    //         {
-    //             model: Review,
-    //             required: false,
-    //             attributes: []
-    //         }
-    //     ],
-    //     where
-    // });
-
-    // const spotMain = spot.toJSON()
-
-    // spotMain.numReviews = spot2.toJSON().numReviews;
-    // spotMain.numReviews = spot2.toJSON().avgRating;
-
     res.json(spot);
 });
 
