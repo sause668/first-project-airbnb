@@ -13,17 +13,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
     const bookingsUser = await Booking.findAll({
         where: {userId: user.id},
-        include: {
+        include: [{
             model: Spot,
             subQuery: false,
             attributes: {
                 // subQuery: false,
-                include: [
-                    [
-                        Sequelize.col('SpotImages.url'),
-                        'previewImage'
-                    ]
-                ],
+                // include: [
+                //     [
+                //         Sequelize.col('SpotImages.url'),
+                //         'previewImage'
+                //     ]
+                // ],
                 exclude: ['createdAt', 'updatedAt']
             },
             include: {
@@ -34,7 +34,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 }
             },
             // group: ['SpotImages.id']
-        },
+        }],
         // group: [''],
     });
 
