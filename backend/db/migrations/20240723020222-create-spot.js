@@ -29,28 +29,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [5, 100]
+          // len: [5, 100]
         }
       },
       city: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [2, 50]
+          // len: [2, 50]
         }
       },
       state: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [2, 50]
+          // len: [2, 50]
         }
       },
       country: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [2, 50]
+          // len: [2, 50]
         }
       },
       lat: {
@@ -75,7 +75,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          len: [3, 50]
+          // len: [3, 50]
         }
       },
       description: {
