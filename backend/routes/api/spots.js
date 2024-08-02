@@ -69,6 +69,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 [
                     Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
                     'avgRating'
+                ],
+                [
+                    Sequelize.col('SpotImages.url'),
+                    'previewImage'
                 ]
             ]
         },
@@ -80,13 +84,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: SpotImage,
-                attributes: ['url'],
+                attributes: [],
                 where: {
                     preview: true
                 }
             },
         ],
-        group: ['Spot.id'],
+        group: ['Spot.id', 'SpotImages.id'],
         where
     });
 
