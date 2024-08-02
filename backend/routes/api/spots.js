@@ -23,6 +23,10 @@ router.get('/', pagination, async (req, res, next) => {
                     Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
                     'avgRating'
                 ],
+                [
+                    Sequelize.col('SpotImages.url'),
+                    'previewImage'
+                ]
             ]
         },
         include: [
@@ -39,7 +43,7 @@ router.get('/', pagination, async (req, res, next) => {
                 }
             },
         ],
-        group: ['Spot.id', 'SpotImages.id'],
+        group: ['Spot.id'],
         limit,
         offset
     });
