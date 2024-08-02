@@ -53,24 +53,24 @@ module.exports = {
           len: [2, 50]
         }
       },
-      lat: {
-        type: {
-          type: Sequelize.INTEGER
-          // validate: {
-          //   min: -90,
-          //   max: 90
-          // }
-        }
-      },
-      lng: {
-        type: {
-          type: Sequelize.INTEGER
-          // validate: {
-          //   min: -180,
-          //   max: 180
-          // }
-        }
-      },
+      // lat: {
+      //   type: {
+      //     type: Sequelize.INTEGER
+      //     // validate: {
+      //     //   min: -90,
+      //     //   max: 90
+      //     // }
+      //   }
+      // },
+      // lng: {
+      //   type: {
+      //     type: Sequelize.INTEGER
+      //     // validate: {
+      //     //   min: -180,
+      //     //   max: 180
+      //     // }
+      //   }
+      // },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
