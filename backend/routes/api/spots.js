@@ -26,7 +26,7 @@ router.get('/', pagination, async (req, res, next) => {
                 [
                     Sequelize.literal(`(
                         SELECT SpotImages.url
-                        FROM SpotImages
+                        FROM Spots
                         WHERE
                             spotId = Spot.id
                             AND
