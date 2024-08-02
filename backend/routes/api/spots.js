@@ -39,7 +39,7 @@ router.get('/', pagination, async (req, res, next) => {
                 }
             },
         ],
-        group: ['Spot.id'],
+        group: ['Spot.id', 'SpotImages.id'],
         limit,
         offset
     });
@@ -152,7 +152,7 @@ router.get('/:spotId', async (req, res, next) => {
     spotMain.numReviews = spot2.toJSON().numReviews;
     spotMain.numReviews = spot2.toJSON().avgRating;
 
-    res.json(spotMain);
+    res.json(spot2);
 });
 
 // Return all the bookings for a spot specified by id.
