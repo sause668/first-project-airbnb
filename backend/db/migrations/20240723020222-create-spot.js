@@ -53,22 +53,22 @@ module.exports = {
           len: [2, 50]
         }
       },
-      // lat: {
-      //   type: {
-      //     type: Sequelize.DECIMAL,
-      //     validate: {
-      //       min: -90,
-      //       max: 90
-      //     }
-      //   }
-      // },
+      lat: {
+        type: {
+          type: Sequelize.DECIMAL,
+          // validate: {
+          //   min: -90,
+          //   max: 90
+          // }
+        }
+      },
       lng: {
         type: {
           type: Sequelize.DECIMAL,
-          validate: {
-            min: -180,
-            max: 180
-          }
+          // validate: {
+          //   min: -180,
+          //   max: 180
+          // }
         }
       },
       name: {

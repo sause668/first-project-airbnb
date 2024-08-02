@@ -95,23 +95,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     lat: {
       type: DataTypes.DECIMAL,
-      validate: {
-        rangeLat(value) {
-          if (value < -90 || value > 90) {
-            throw Error('Latitude must be within -90 and 90')
-          }
-        }
-      }
+      // validate: {
+      //   rangeLat(value) {
+      //     if (value < -90 || value > 90) {
+      //       throw Error('Latitude must be within -90 and 90')
+      //     }
+      //   }
+      // }
     },
     lng: {
       type: DataTypes.DECIMAL,
-      validate: {
-        rangeLng(value) {
-          if (value < -180 || value > 180) {
-            throw Error('Longitude must be within -180 and 180')
-          }
-        }
-      }
+      // validate: {
+      //   rangeLng(value) {
+      //     if (value < -180 || value > 180) {
+      //       throw Error('Longitude must be within -180 and 180')
+      //     }
+      //   }
+      // }
     },
     name: {
       type: DataTypes.STRING,
