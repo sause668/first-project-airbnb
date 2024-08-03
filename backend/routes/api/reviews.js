@@ -31,6 +31,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 },
                 include: {
                     model: SpotImage,
+                    required: false,
                     attributes: [],
                     where: {
                         preview: true
@@ -39,6 +40,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: ReviewImage,
+                required: false,
                 attributes: ['id', 'url']
             }
         ]

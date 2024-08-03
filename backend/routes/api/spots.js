@@ -37,6 +37,7 @@ router.get('/', pagination, async (req, res, next) => {
             },
             {
                 model: SpotImage,
+                required: false,
                 attributes: [],
                 where: {
                     preview: true
@@ -84,6 +85,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: SpotImage,
+                required: false,
                 attributes: [],
                 where: {
                     preview: true
@@ -121,11 +123,13 @@ router.get('/:spotId', async (req, res, next) => {
         include: [
             {
                 model: User,
+                required: false,
                 as: 'Owner',
                 attributes: ['id', 'firstName', 'lastName'],
             },
             {
                 model: SpotImage,
+                required: false,
                 attributes: ['id', 'url', 'preview'],
             },
             {
@@ -196,6 +200,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
             },
             {
                 model: ReviewImage,
+                required: false,
                 attributes: ['id', 'url']
             }
         ]

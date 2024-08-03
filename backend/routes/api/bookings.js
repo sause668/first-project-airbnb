@@ -30,6 +30,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 include: {
                     model: SpotImage,
                     as: 'SpotImages',
+                    required: false,
                     attributes: [],
                     where: {
                         preview: true
@@ -49,7 +50,6 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const {startDate, endDate} = req.body;
 
     const bookingEdit = await Booking.findOne({where: {id: bookingId}});
-    console.log(bookingEdit)
 
     if (!bookingEdit) {
         const err = new Error("Booking couldn't be found");
