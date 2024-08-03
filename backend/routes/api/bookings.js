@@ -127,13 +127,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     const {user} = req;
     const {bookingId} = req.params;
 
-    const bookingDelete = await Booking.findOne({
-        where: {id: bookingId},
-        include: {
-            model: Spot,
-            attributes: ['ownerId']
-        }
-    });
+    const bookingDelete = await Booking.findByPk(bookingId);
 
     if (!bookingDelete) {
         const err = new Error("Booking couldn't be found");
@@ -141,8 +135,9 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    if (bookingDelete.userId !== user.id && 
-        bookingDelete['Spot'].ownerId !== user.id) {
+    const spot = await bookingDelete.getSpot();
+
+    if (bookingDelete.userId !== user.id && spot.ownerId !== user.id) {
         const err = new Error("Forbidden");
         err.status = 403;
         return next(err);
