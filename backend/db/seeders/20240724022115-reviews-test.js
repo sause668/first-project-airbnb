@@ -80,12 +80,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    // const testSpot = await Spot.findOne({where: {name: 'da spot'}});
-
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      // spotId: { [Op.in]: [testSpot.id] }
-    }, {});
+    return queryInterface.bulkDelete(options, {}, {});
   }
 };

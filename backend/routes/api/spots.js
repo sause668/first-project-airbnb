@@ -237,7 +237,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     const spot = await Spot.findOne({
         where: {id: spotId},
-        attributes: ['id'],
+        attributes: ['id', 'ownerId'],
         include: {
             model: Booking,
             attributes: ['startDate', 'endDate']

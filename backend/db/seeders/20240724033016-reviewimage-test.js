@@ -44,16 +44,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    // const testReview = await Review.findOne({
-    //   where: {stars: 5},
-    //   attributes: ['id']
-    // });
-    
-    // const Op = Sequelize.Op;
-
     options.tableName = 'ReviewImages';
     return queryInterface.bulkDelete(options, {
-      // reviewId: { [Op.in]: [testReview.id] }
     }, {});
   }
 };
