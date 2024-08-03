@@ -141,7 +141,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    if (bookingDelete.userId !== user.id || 
+    if (bookingDelete.userId !== user.id && 
         bookingDelete['Spot'].ownerId !== user.id) {
         const err = new Error("Forbidden");
         err.status = 403;
