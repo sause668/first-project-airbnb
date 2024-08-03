@@ -39,9 +39,9 @@ router.get('/', pagination, async (req, res, next) => {
                 model: SpotImage,
                 required: false,
                 attributes: [],
-                // where: {
-                //     preview: true
-                // }
+                where: {
+                    preview: true
+                }
             },
         ],
         group: ['Spot.id', 'SpotImages.id'],
