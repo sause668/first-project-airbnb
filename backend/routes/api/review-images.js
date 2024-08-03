@@ -3,14 +3,20 @@ const router = express.Router();
 const { requireAuth }  = require('../../utils/auth');
 
 // Import model(s)
-const { ReviewImage } = require('../../db/models');
+const { ReviewImage, Review } = require('../../db/models');
 
 // Delete an existing image for a Review.
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const {user} = req;
     const {imageId} = req.params;
 
-    const reviewImageDelete = await ReviewImage.findOne({where: {id: imageId}});
+    const reviewImageDelete = await ReviewImage.findOne({
+        where: {id: imageId},
+        include: {
+            model: Review,
+            attributes: ['userId']
+        }
+    });
 
     if (!reviewImageDelete) {
         const err = new Error("Review Image couldn't be found");
@@ -18,7 +24,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    if (reviewImageDelete.userId !== user.id) {
+    if (reviewImageDelete['Review'].userId !== user.id) {
         const err = new Error("Forbidden");
         err.status = 403;
         return next(err);
