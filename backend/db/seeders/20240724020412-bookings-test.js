@@ -23,8 +23,8 @@ module.exports = {
     
     await john.createBooking({
       spotId: redKeep.id,
-      startDate: '2024-08-18',
-      endDate: '2024-08-21'
+      startDate: '2025-08-18',
+      endDate: '2025-08-21'
     })
     await john.createBooking({
       spotId: dragonRoom.id,
@@ -58,8 +58,8 @@ module.exports = {
     })
     await jamie.createBooking({
       spotId: dragonRoom.id,
-      startDate: '2024-08-26',
-      endDate: '2024-08-29'
+      startDate: '2025-08-26',
+      endDate: '2025-08-29'
     })
     await tyrion.createBooking({
       spotId: redKeep.id,
@@ -68,8 +68,8 @@ module.exports = {
     })
     await tyrion.createBooking({
       spotId: crowShack.id,
-      startDate: '2024-08-14',
-      endDate: '2024-08-15'
+      startDate: '2025-08-14',
+      endDate: '2025-08-15'
     })
     await tyrion.createBooking({
       spotId: dragonRoom.id,
