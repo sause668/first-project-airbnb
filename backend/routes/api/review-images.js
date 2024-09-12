@@ -33,3 +33,15 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
 
 
 module.exports = router;
+
+// store.dispatch(spotActions.createSpot({
+//     "address": "123 Should Exist Street",
+//     "city": "San Frangoodtogo",
+//     "state": "California",
+//     "country": "United States of Valid Data",
+//     "lat": 37.7645358,
+//     "lng": -122.4730327,
+//     "name": "The Good Spot",
+//     "description": "Place where valid data can stay",
+//     "price": 123
+// }))

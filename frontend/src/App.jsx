@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
+import Navigation from './components/Navigation/Navigation';
+import SpotSearch from './components/Spots/SpotSearchPage/SpotSearchPage';
+import SpotOwner from './components/Spots/SpotOwnerPage/SpotOwnerPage';
+import SpotSolo from './components/Spots/SpotSoloPage/SpotSoloPage';
+import ReviewsUser from './components/Reviews/ReviewsUserPage/ReviewsUserPage';
+import SpotEdit from './components/Spots/SpotEditPage/SpotEditPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -28,8 +33,46 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <SpotSearch/>
+      },
+      {
+        path: '/spots',
+        children: [
+          {
+            path: '/spots/current',
+            element: <SpotOwner/>
+          },
+          {
+            path: '/spots/:spotId',
+            children: [
+              {
+                path: '/spots/:spotId',
+                element: <SpotSolo/>
+              },
+              {
+                path: '/spots/:spotId/edit',
+                element: <SpotEdit/>
+              },
+              
+            ]
+          },
+          {
+            path: '/spots/new',
+            element: <SpotEdit/>
+          },
+          
+        ]
+      },
+      {
+        path: '/reviews',
+        children: [
+          {
+            path: '/reviews/current',
+            element: <ReviewsUser/>
+          }
+        ]
       }
+      
     ]
   }
 ]);

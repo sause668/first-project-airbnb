@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
@@ -48,9 +49,14 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello {user.firstName}</li>
             <li>{user.email}</li>
+            <li>
+                <NavLink to={'/spots/current'} onClick={closeMenu}>Manage Spots</NavLink>
+            </li>
+            <li>
+                <NavLink to={'/reviews/current'} onClick={closeMenu}>Manage Reviews</NavLink>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

@@ -214,6 +214,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 // Creates and returns a new spot.
 router.post('/', requireAuth, async (req, res, next) => {
+    
     const { user } = req;
     const { address, city, state, country, lat, lng, name, description, price} = req.body;
 
@@ -229,7 +230,7 @@ router.post('/', requireAuth, async (req, res, next) => {
         description,
         price
     });
-
+    
     res.status(201);
     res.json(spotNew);
 });
@@ -362,6 +363,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         err.status = 403;
         return next(err);
     }
+    console.log('bah')
 
     const spotImageNew = await spot.createSpotImage({
         url,

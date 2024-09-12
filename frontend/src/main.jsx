@@ -7,6 +7,10 @@ import configureStore from './store/store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import { ModalProvider, Modal } from './context/Modal';
 import * as sessionActions from './store/session';
+import * as spotActions from './store/spot';
+import * as reviewActions from './store/review';
+import * as spotImageActions from './store/spotImage';
+import * as reviewImageActions from './store/reviewImage';
 
 const store = configureStore();
 
@@ -16,6 +20,11 @@ if (import.meta.env.MODE !== 'production') {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
+  window.spotActions = spotActions;
+  window.reviewActions = reviewActions;
+  window.spotImageActions = spotImageActions;
+  window.reviewImageActions = reviewImageActions;
+
 }
 
 // if (process.env.NODE_ENV !== 'production') {

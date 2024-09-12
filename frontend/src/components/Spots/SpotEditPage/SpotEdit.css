@@ -1,0 +1,21 @@
+/* .inputCon {
+    float:left;
+    margin-right:20px;
+} */
+
+label {
+    display:flex;
+}
+
+input {
+    display:flex;
+}
+
+.label {
+    margin: 0rem;
+}
+
+.error {
+    color: red;
+    margin-left: .25rem;
+}
