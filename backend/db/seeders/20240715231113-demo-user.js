@@ -46,7 +46,7 @@ module.exports = {
         username: 'queenshand',
         hashedPassword: bcrypt.hashSync('betterplans123')
       }
-    ], { validate: true });
+    ], { validate: true }); 
   },
 
   async down (queryInterface, Sequelize) {
