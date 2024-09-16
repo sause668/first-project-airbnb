@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import { FaStar } from "react-icons/fa";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { IoStarOutline } from "react-icons/io5";
 import { IoIosStar } from "react-icons/io";
 
 import './ReviewEdit.css';
-import * as spotActions from '../../../store/spot';
 import * as reviewActions from '../../../store/review';
 import { useModal } from '../../../context/Modal';
 
 function ReviewEdit({spotId, review}) {
     const [reviewText, setReviewText] = useState((review) ? review.review : '');
-    // const [reviewText, setReviewText] = useState(review.toString());
     const [reviewStars, setReviewStars] = useState(review ? review.stars : 0);
     const [starsInput, setStarsInput] = useState(reviewStars);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -32,7 +28,7 @@ function ReviewEdit({spotId, review}) {
         setStarsInput(star);
     }
 
-    const handleStarLeave = (star) => {
+    const handleStarLeave = () => {
         setStarsInput(reviewStars);
     }
 
@@ -85,6 +81,17 @@ function ReviewEdit({spotId, review}) {
         }
     }
 
+
+    // useEffect(() => {
+    //     if (review && isLoaded(false)) {
+    //         setReviewText(review.text);
+    //         setReviewStars(review.stars);
+    //         setIsLoaded(true);
+
+    //     }
+    // }, []);
+  
+  
     // useEffect(() => {
     //     if (review && isLoaded(false)) {
     //         setReviewText(review.text);
@@ -99,7 +106,7 @@ function ReviewEdit({spotId, review}) {
             <h1 id='reviewEditTitle'>{(review) ? `How was your stay at ${review.Spot.name}?`:'How was your stay?'}</h1>
             {errors ? (<>
                 {Object.values(errors).map((err, index) => (
-                    <p className='error'>{err}</p>
+                    <p className='error' key={`reviewEditError${index}`}>{err}</p>
                 ))}
             </>):null}
             <textarea 
@@ -113,6 +120,7 @@ function ReviewEdit({spotId, review}) {
             <div id='reviewStarsCon'>
                 {star.map((star, index) => (
                     <div 
+                        key={`reviewStars${index}`}
                         onMouseEnter={()=>handleStarEnter(star)} 
                         onMouseLeave={()=>handleStarLeave(star)}
                         onClick={()=>handleStarClick(star)}

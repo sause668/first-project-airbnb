@@ -1,13 +1,10 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './SpotDelete.css';
 import * as spotActions from '../../../store/spot';
 import { useModal } from '../../../context/Modal';
 
 function SpotDelete({spotId}) {
     const dispatch = useDispatch();
-    // const spot = useSelector(state => state.spot.spotSolo);
 
     const { closeModal } = useModal();
 
@@ -16,11 +13,6 @@ function SpotDelete({spotId}) {
         .then(closeModal)
         .then(() => dispatch(spotActions.fetchSpotsOwner()));
     }
-
-    // useEffect(() => {
-    //     dispatch(spotActions.fetchSpot(spotId))
-    //     dispatch(reviewActions.fetchReviewsSpot(spotId))
-    // }, [dispatch]);
   
     return (
         <div className='deleteCon'>

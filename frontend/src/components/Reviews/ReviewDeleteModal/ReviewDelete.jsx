@@ -1,8 +1,5 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './ReviewDelete.css';
-import * as spotActions from '../../../store/spot';
 import * as reviewActions from '../../../store/review'
 import { useModal } from '../../../context/Modal';
 

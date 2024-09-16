@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { FaStar } from "react-icons/fa";
 import { LuDot } from "react-icons/lu";
@@ -14,7 +14,6 @@ function SpotSolo() {
     const { spotId } = useParams();
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const spot = useSelector(state => state.spot.spotSolo);
     const reviews = useSelector(state => state.review.reviewsSpot);
     const user = useSelector(state => state.session.user);
@@ -87,7 +86,7 @@ function SpotSolo() {
                         <div id='spotImagesCon'>
                             {spot.SpotImages.filter(img => img.preview === false)
                                 .map((image, index)  => (
-                                    <img className='spotImage' src={image.url} alt={image.id} />
+                                    <img className='spotImage' key={`spotSoloImage${index}`} src={image.url} alt={image.id} />
                             ))}
                         </div>
                     </div>
@@ -143,12 +142,12 @@ function SpotSolo() {
                             {spot.numReviews > 0 ? (
                                 <div id='reviewsListCon'>
                                     {reviews.Reviews.map((review, index) => (
-                                        <div id='reviewDetailsCon'>
-                                            <h3 id='reviewUser'>{review.User.firstName}</h3>
-                                            <h4 id='reviewDate'>{convertDate(review.createdAt)}</h4>
-                                            <p id='reviewDetails'>{review.review}</p>
+                                        <div className='reviewDetailsCon' key={`reviewDetailsCon${index}`}>
+                                            <h3 className='reviewUser'>{review.User.firstName}</h3>
+                                            <h4 className='reviewDate'>{convertDate(review.createdAt)}</h4>
+                                            <p className='reviewDetails'>{review.review}</p>
                                             {user && user.id === review.userId ? (
-                                                <div id='reviewDelete'>
+                                                <div className='reviewDelete'>
                                                     <OpenModalButton 
                                                         modalComponent={<ReviewDelete spotId={spotId} reviewId={review.id}/>} // component to render inside the modal
                                                         buttonText={'Delete'} // text of the button that opens the modal

@@ -13,15 +13,12 @@ function SpotSearch() {
     const navigate = useNavigate();
     const user = useSelector(state => state.session.user);
     const [isLoaded, setIsLoaded] = useState(false);
-  
-    // dispatch(spotActions.fetchSpots())
-//   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (!user) navigate('/');
     else dispatch(spotActions.fetchSpotsOwner())
     .then(() => setIsLoaded(true));
-  }, [dispatch]);
+  }, [dispatch, navigate, user]);
   
     return (
         <div id='spotsOwnerCon'>

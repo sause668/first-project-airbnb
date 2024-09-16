@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import { IoMenu } from "react-icons/io5";
-import { RxBorderSolid } from "react-icons/rx";
 
 import './Navigation.css';
 import * as sessionActions from '../../store/session';

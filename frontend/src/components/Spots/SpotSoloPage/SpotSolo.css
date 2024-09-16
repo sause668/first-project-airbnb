@@ -178,24 +178,24 @@
 
 }
 
-#reviewDetailsCon {
+.reviewDetailsCon {
     margin: 2rem 0rem;
 }
 
-#reviewUser {
+.reviewUser {
     margin: 0rem;
 }
 
-#reviewDate {
+.reviewDate {
     color: rgb(87, 87, 87);
     margin: .1rem 0rem;
 }
 
-#reviewDetails {
+.reviewDetails {
     margin: 0rem;
 }
 
-#reviewDelete {
+.reviewDelete {
     margin: .5rem 0rem;
 }
 
