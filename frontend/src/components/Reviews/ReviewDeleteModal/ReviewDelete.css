@@ -1,0 +1,21 @@
+#reviewDeleteCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+#reviewDeleteTitle {
+    margin-bottom: 0rem;
+    /* padding: 0rem; */
+}
+
+#reviewDeleteText {
+    margin: 0rem 0rem 1rem;
+}
+
+#reviewDeleteButtonCon {
+
+}

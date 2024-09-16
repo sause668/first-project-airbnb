@@ -1,10 +1,11 @@
 import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 
-function SignupFormModal() {
+function SignupFormModal({navigate}) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -14,6 +15,7 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  // const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,12 +31,18 @@ function SignupFormModal() {
         })
       )
         .then(closeModal)
+        .then(() => navigate('/'))
         .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
+          const err = await res.json();
+          if (err) {
+              if (err.errors) {
+                  setErrors(err.errors);
+              } else {
+                  if (err.stack) delete err.stack;
+                  setErrors(err)
+              }
           }
-        });
+      });
     }
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
@@ -42,74 +50,114 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
+    <div className='formCon'>
+      <h1 className='inputTitle'>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
+        {/* Email */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>Email</p>
+          </label>
           <input
+            className='formInput'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+          {errors.email && <p className='labelTitle error'>{errors.email}</p>}
+        </div>
+        {/* Username */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>
+              Username
+            </p>
+          </label>
           <input
+            className='formInput'
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+          {errors.username && <p className='labelTitle error'>{errors.username}</p>}
+        </div>
+        {/* First Name */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>
+              First Name
+            </p>
+          </label>
           <input
+            className='formInput'
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-        </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
+          {errors.firstName && <p className='labelTitle error'>{errors.firstName}</p>}
+        </div>
+        {/* Last Name */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>Last Name</p>
+          </label>
           <input
+            className='formInput'
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-        </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
+          {errors.lastName && <p className='labelTitle error'>{errors.lastName}</p>}
+        </div>
+        {/* Password */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>Password</p>
+          </label>
           <input
+            className='formInput'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <p className='labelTitle error'>{errors.password}</p>}
+        </div>
+        {/* Confirm Password */}
+        <div className='inputCon'>
+          <label>
+            <p className='labelTitle'>Confirm Password</p>
+          </label>
           <input
+            className='formInput'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
+          {errors.confirmPassword && (
+            <p className='labelTitle error'>{errors.confirmPassword}</p>
+          )}
+        </div>
+        
+        <button 
+          className='submitButton'
+          type="submit"
+          disabled={
+            (!email.length ||
+            !username.length ||
+            !firstName.length ||
+            !lastName.length ||
+            !password.length ||
+            !confirmPassword.length)
+          }
+          >Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

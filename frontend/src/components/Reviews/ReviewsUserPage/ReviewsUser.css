@@ -1,0 +1,31 @@
+#reviewsUserContainer {
+    padding: 0rem 5rem;
+}
+
+#reviewUserTitle {
+
+}
+
+.reviewUser {
+    margin: 2rem 0rem;
+}
+
+.reviewUserName {
+    margin: 0rem;
+}
+
+.reviewUserDate {
+    color: rgb(87, 87, 87);
+    margin: .1rem 0rem;
+}
+
+.reviewUserText{
+    margin: 0rem;
+}
+
+.reviewButtons {
+    display: flex;
+    justify-content: flex-start;
+    gap: .5rem;
+    margin-top: .5rem;
+}

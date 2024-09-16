@@ -123,21 +123,31 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           args: [true],
-          msg: 'Description is required'
+          msg: 'Name is required'
         },
       }
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
-      len: {
-        args: [0, 500],
-        msg: 'Description can be no more than 500 characters'
-      },
+      // len: {
+      //   args: [30, 500],
+      //   msg: 'Description can be no more than 500 characters'
+      // },
       validate: {
+        charMax(value) {
+          if (value && value.length > 500) {
+            throw Error('Description can be no more than 500 characters')
+          }
+        },
+        charMin(value) {
+          if (value && value.length < 30) {
+            throw Error('Description needs a minimum of 30 characters')
+          }
+        },
         notEmpty: {
           args: [true],
-          msg: 'Description is required'
+          msg: 'Description needs a minimum of 30 characters'
         }
       }
     },

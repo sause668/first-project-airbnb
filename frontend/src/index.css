@@ -1,1 +1,154 @@
 /* TODO: Add sitewide styles */
+@font-face {
+    font-family: myFirstFont;
+    font-family: 'Patua';
+    font-style: normal;
+    src: url('/fonts/Patua_One/PatuaOne-Regular.ttf');
+}
+
+@font-face {
+    font-family: myFirstFont;
+    font-family: 'Signika';
+    font-style: normal;
+    src: url('/fonts/Signika_Negative/static/SignikaNegative-Regular.ttf');
+}
+
+@font-face {
+    font-family: myFirstFont;
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/Signika_Negative/static/SignikaNegative-Bold.ttf');
+}
+
+body {
+    font-family: 'Signika';
+    padding: 0px 0px 10px;
+    margin: 0px;
+}
+
+.curser:hover {
+    cursor: pointer;
+}
+
+.actionButton {
+    background-color: grey;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px .5px black;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.actionButton:disabled {
+    background-color: rgb(197, 197, 197);
+    border-color: rgb(120, 120, 120);
+    box-shadow: 2px 2px .5px rgb(120, 120, 120);
+}
+
+
+
+
+
+.deleteCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+
+
+.deleteTitle {
+    margin-bottom: 0rem;
+    /* padding: 0rem; */
+}
+
+.deleteText {
+    margin: .5rem 0rem .5rem;
+}
+
+.deleteButton {
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px .5px black;
+    font-size: 15px;
+    height: 50px;
+    width: 100%;
+    margin: .4rem 0rem;
+    cursor: pointer;
+}
+
+.yes {
+    background-color: rgb(255, 92, 92);
+}
+
+.no {
+    background-color: grey;
+}
+
+/* Login Signup */
+
+.formCon {
+    width: 300px
+}
+
+@media (max-width:350px) {
+    .formCon {
+        width: 90%;
+    }
+}
+
+.inputTitle {
+    margin: 0rem;
+    text-align: center;
+}
+
+.inputCon {
+    margin-bottom: .3rem;
+}
+
+.inputLabelCon {
+    display: flex;
+}
+
+.labelTitle {
+    margin: .1rem .3rem .1rem 0rem;
+    font-size: 14px;
+}
+
+
+.error {
+    color: red;
+    /* margin-left: 1rem; */
+}
+
+.formInput {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 3px;
+    background-color: rgb(211, 225, 252);
+}
+
+.submitButton {
+    color: white;
+    background-color: rgb(255, 92, 92);
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px .5px black;
+    font-size: 15px;
+    height: 50px;
+    width: 100%;
+    margin: .4rem 0rem;
+    cursor: pointer;
+}
+
+.submitButton:disabled {
+    background-color: rgb(197, 197, 197);
+    border-color: rgb(120, 120, 120);
+    box-shadow: 2px 2px .5px rgb(120, 120, 120);
+}

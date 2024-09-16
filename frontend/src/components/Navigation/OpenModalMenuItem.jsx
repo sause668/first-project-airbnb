@@ -16,7 +16,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <div className='profileListItem curser' onClick={onClick}>{itemText}</div>
   );
 }
 

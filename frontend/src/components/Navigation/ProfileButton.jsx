@@ -1,14 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
+import { IoMenu } from "react-icons/io5";
+import { RxBorderSolid } from "react-icons/rx";
+
+import './Navigation.css';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModel';
 
+
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -35,31 +41,37 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
-    closeMenu();
+    dispatch(sessionActions.logout())
+    .then(closeMenu)
+    .then(() => navigate('/'));
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = showMenu ? "conProfileMenu" : "hidden";
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button onClick={toggleMenu} id='profileMenuButton' className='curser'>
+        <IoMenu id='menuIcon'/><FaUserCircle id='profileIcon'/>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hello {user.firstName}</li>
-            <li>{user.email}</li>
-            <li>
-                <NavLink to={'/spots/current'} onClick={closeMenu}>Manage Spots</NavLink>
-            </li>
-            <li>
-                <NavLink to={'/reviews/current'} onClick={closeMenu}>Manage Reviews</NavLink>
-            </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
+            <div className='profileList'>
+                <p className='profileListItem'>Hello {user.firstName}</p>
+                <p className='profileListItem'>{user.email}</p>
+            </div>
+            <p id='profileListBorder'/>
+            <div className='profileList'>
+                <p className='profileListItem'>
+                <NavLink className='profileLink' to={'/spots/current'} onClick={closeMenu}>Manage Spots</NavLink>
+                </p>
+                <p className='profileListItem'>
+                    <NavLink className='profileLink' to={'/reviews/current'} onClick={closeMenu}>Manage Reviews</NavLink>
+                </p>
+            </div>
+            <div>
+              <button id='logoutButton' onClick={logout}>Log Out</button>
+            </div>
           </>
         ) : (
           <>
@@ -71,11 +83,11 @@ function ProfileButton({ user }) {
             <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
+              modalComponent={<SignupFormModal navigate={navigate}/>}
             />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

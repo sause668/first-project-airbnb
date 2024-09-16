@@ -22,7 +22,7 @@ module.exports = {
       lat: 54.607314,
       lng: -2.179626,
       name: 'Stark Quarters',
-      description: 'Winter is coming',
+      description: 'Winter is coming. Find warmth in the north.',
       price: 525
     });
 
@@ -34,7 +34,7 @@ module.exports = {
       lat: 56.687560,
       lng: -2.617918,
       name: 'Crow Shack',
-      description: 'Only use elevator with supervision',
+      description: 'The sight of the great ice wall will blow you away.  Free tours to the top to get the best views',
       price: 50
     });
 
@@ -46,7 +46,7 @@ module.exports = {
       lat: 51.483250,
       lng: -0.327463,
       name: "Red Keep",
-      description: 'Best place to watch the Sept burn down',
+      description: "There's nothing like the city.  Best markets and the best nightlife",
       price: 1550
     });
 
@@ -58,7 +58,7 @@ module.exports = {
       lat: 51.808488,
       lng: 1.039471,
       name: 'Dragon Room',
-      description: "Don't piss off the dragons.",
+      description: "Come the the ancient dragon thought to be lost to time.  Careful though.  They can get moody",
       price: 775
     });
 

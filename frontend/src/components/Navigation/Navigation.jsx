@@ -1,48 +1,3 @@
-// import { NavLink } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import ProfileButton from './ProfileButton';
-// import OpenModalButton from '../OpenModalButton/OpenModalButton';
-// import LoginFormModal from '../LoginFormModal/LoginFormModal';
-// import SignupFormModal from '../SignupFormModal/SignupFormModel';
-// import './Navigation.css';
-
-// function Navigation({ isLoaded }) {
-//   const sessionUser = useSelector((state) => state.session.user);
-
-//   let sessionLinks = [];
-//   if (sessionUser) {
-//     sessionLinks.push((
-//         <ProfileButton user={sessionUser} />
-//     ));
-//   } else {
-//     sessionLinks.push(
-//         (
-//             <OpenModalButton
-//             buttonText="Log In"
-//             modalComponent={<LoginFormModal />}
-//             />
-//         ),
-//         (
-//             <OpenModalButton
-//             buttonText="Sign Up"
-//             modalComponent={<SignupFormModal />}
-//             />
-//         )
-//     );
-//   }
-
-//   return (
-//     <ul>
-//       <li>
-//         <NavLink to="/">Home</NavLink>
-//       </li>
-//       {isLoaded && sessionLinks.map((link, index) => (<li key={`sessionLink${index}`}>{link}</li>))}
-//     </ul>
-//   );
-// }
-
-// export default Navigation;
-
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -52,16 +7,27 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
+    <nav id='conMain'>
+        <div id='conLogo'>
+            <NavLink to="/">
+                <img src="/airbnb-logo.svg" alt="Airbnb Logo" id='logo'/>
+            </NavLink>
+        </div>
+        <div id='conNavRight'>
+           {sessionUser ?
+            <div id='conNewSpot'>
+                <NavLink to={'/spots/new'} id='newSpot'>Create A New Spot</NavLink>
+            </div>
+        :null}
+        {isLoaded && (
+            <div id='conMenu'>
+                <ProfileButton user={sessionUser} />
+            </div>
+        )} 
+        </div>
+        
+    </nav>
+    
   );
 }
 

@@ -28,33 +28,33 @@ module.exports = {
     })
     await john.createBooking({
       spotId: dragonRoom.id,
-      startDate: '2024-09-05',
-      endDate: '2024-09-10'
+      startDate: '2025-09-05',
+      endDate: '2025-09-10'
     })
     await sansa.createBooking({
       spotId: starkQuarters.id,
-      startDate: '2024-10-04',
-      endDate: '2024-10-16'
+      startDate: '2025-10-04',
+      endDate: '2025-10-16'
     })
     await sansa.createBooking({
       spotId: redKeep.id,
-      startDate: '2024-11-15',
-      endDate: '2024-11-21'
+      startDate: '2025-11-15',
+      endDate: '2025-11-21'
     })
     await daenerys.createBooking({
       spotId: starkQuarters.id,
-      startDate: '2024-09-12',
-      endDate: '2024-09-24'
+      startDate: '2025-09-12',
+      endDate: '2025-09-24'
     })
     await daenerys.createBooking({
       spotId: redKeep.id,
-      startDate: '2024-10-01',
-      endDate: '2024-10-08'
+      startDate: '2025-10-01',
+      endDate: '2025-10-08'
     })
     await jamie.createBooking({
       spotId: starkQuarters.id,
-      startDate: '2024-09-14',
-      endDate: '2024-09-20'
+      startDate: '2025-09-14',
+      endDate: '2025-09-20'
     })
     await jamie.createBooking({
       spotId: dragonRoom.id,
@@ -63,8 +63,8 @@ module.exports = {
     })
     await tyrion.createBooking({
       spotId: redKeep.id,
-      startDate: '2024-09-17',
-      endDate: '2024-10-15'
+      startDate: '2025-09-17',
+      endDate: '2025-10-15'
     })
     await tyrion.createBooking({
       spotId: crowShack.id,
@@ -73,8 +73,8 @@ module.exports = {
     })
     await tyrion.createBooking({
       spotId: dragonRoom.id,
-      startDate: '2024-10-20',
-      endDate: '2024-11-25'
+      startDate: '2025-10-20',
+      endDate: '2025-11-25'
     })
     
   },

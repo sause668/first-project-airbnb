@@ -54,14 +54,14 @@ export const fetchSpots = () => async (dispatch) => {
     const response = await fetch("/api/spots");
     const data = await response.json();
     dispatch(receiveSpotsAll(data));
-    return response;
+    return data;
 };
 
 export const fetchSpotsOwner =  () => async (dispatch) => {
     const response = await csrfFetch('/api/spots/current');
     const data = await response.json();
     dispatch(receiveSpotsOwner(data));
-    return response;
+    return data;
 }
 
 export const fetchSpot =  (spotId) => async (dispatch) => {
@@ -78,7 +78,7 @@ export const createSpot =  (params) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(receiveSpot(data));
-    return response;
+    return data;
 }
 
 export const editSpot =  (params) => async (dispatch) => {
@@ -89,7 +89,7 @@ export const editSpot =  (params) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(receiveSpot(data));
-    return response;
+    return data;
 }
 
 export const deleteSpot =  (spotId) => async (dispatch) => {
