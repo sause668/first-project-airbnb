@@ -45,6 +45,7 @@
     /* width: 300px; */
     object-fit: cover;
     /* margin: .1rem; */
+    /* border: 2px solid black */
 }
 
 #spotInfoPriceCon {
@@ -182,16 +183,16 @@
     margin: 2rem 0rem;
 }
 
-.reviewUser {
+.reviewUsers {
     margin: 0rem;
 }
 
-.reviewDate {
+.reviewDates {
     color: rgb(87, 87, 87);
     margin: .1rem 0rem;
 }
 
-.reviewDetails {
+.reviewDetail {
     margin: 0rem;
 }
 

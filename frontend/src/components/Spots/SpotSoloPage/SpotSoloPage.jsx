@@ -143,9 +143,9 @@ function SpotSolo() {
                                 <div id='reviewsListCon'>
                                     {reviews.Reviews.map((review, index) => (
                                         <div className='reviewDetailsCon' key={`reviewDetailsCon${index}`}>
-                                            <h3 className='reviewUser'>{review.User.firstName}</h3>
-                                            <h4 className='reviewDate'>{convertDate(review.createdAt)}</h4>
-                                            <p className='reviewDetails'>{review.review}</p>
+                                            <h3 className='reviewUsers'>{review.User.firstName}</h3>
+                                            <h4 className='reviewDates'>{convertDate(review.createdAt)}</h4>
+                                            <p className='reviewDetail'>{review.review}</p>
                                             {user && user.id === review.userId ? (
                                                 <div className='reviewDelete'>
                                                     <OpenModalButton 
