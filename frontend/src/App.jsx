@@ -8,6 +8,7 @@ import SpotOwner from './components/Spots/SpotOwnerPage/SpotOwnerPage';
 import SpotSolo from './components/Spots/SpotSoloPage/SpotSoloPage';
 import ReviewsUser from './components/Reviews/ReviewsUserPage/ReviewsUserPage';
 import SpotEdit from './components/Spots/SpotEditPage/SpotEditPage';
+import BookingClientPage from './components/Bookings/BookingClientPage/BookingClientPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -71,7 +72,17 @@ const router = createBrowserRouter([
             element: <ReviewsUser/>
           }
         ]
+      },
+      {
+        path: '/bookings',
+        children: [
+          {
+            path: '/bookings/current',
+            element: <BookingClientPage/>
+          }
+        ]
       }
+      
       
     ]
   }

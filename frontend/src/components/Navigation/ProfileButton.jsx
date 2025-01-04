@@ -62,10 +62,13 @@ function ProfileButton({ user }) {
             <p id='profileListBorder'/>
             <div className='profileList'>
                 <p className='profileListItem'>
-                <NavLink className='profileLink' to={'/spots/current'} onClick={closeMenu}>Manage Spots</NavLink>
+                  <NavLink className='profileLink' to={'/spots/current'} onClick={closeMenu}>Manage Spots</NavLink>
                 </p>
                 <p className='profileListItem'>
                     <NavLink className='profileLink' to={'/reviews/current'} onClick={closeMenu}>Manage Reviews</NavLink>
+                </p>
+                <p className='profileListItem'>
+                    <NavLink className='profileLink' to={'/bookings/current'} onClick={closeMenu}>Manage Bookings</NavLink>
                 </p>
             </div>
             <div>

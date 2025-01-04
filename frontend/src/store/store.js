@@ -5,6 +5,7 @@ import spotReducer from './spot';
 import reviewReducer from './review';
 import spotImageReducer from './spotImage'
 import reviewImageReducer from './reviewImage'
+import bookingReducer from './booking';
 
 //Combined Reducer
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     spot: spotReducer,
     review: reviewReducer,
     spotImage: spotImageReducer,
-    reviewImage: reviewImageReducer
+    reviewImage: reviewImageReducer,
+    booking: bookingReducer
 });
 
 //Enhancer based on development or production

@@ -1,0 +1,11 @@
+#currentBookingsCon {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+#currentBookingsTitle {
+    margin: .5rem 0rem;
+}
+
+.currentBookings {
+    margin: 0rem 0rem .5rem 1rem;
+}

@@ -9,6 +9,8 @@ import * as reviewActions from '../../../store/review'
 import OpenModalButton from '../../OpenModalButton/OpenModalButton';
 import ReviewEdit from '../../Reviews/ReviewEditModal/ReviewEditModal';
 import ReviewDelete from '../../Reviews/ReviewDeleteModal/ReviewDelete';
+import BookingEditModal from '../../Bookings/BookingEditModal/BookingEditModal';
+import { convertDate } from '../../../utils/helperFunctions';
 
 function SpotSolo() {
     const { spotId } = useParams();
@@ -17,53 +19,6 @@ function SpotSolo() {
     const spot = useSelector(state => state.spot.spotSolo);
     const reviews = useSelector(state => state.review.reviewsSpot);
     const user = useSelector(state => state.session.user);
-    
-    const convertDate = (date) => {
-        let month = date.slice(5,7);
-        const year = date.slice(0,4);
-        switch (month) {
-            case '01':
-                month = 'January';
-                break;
-            case '02':
-                month = 'February';
-                break;
-            case '03':
-                month = 'March';
-                break;
-            case '04':
-                month = 'April';
-                break;
-            case '05':
-                month = 'May';
-                break;
-            case '06':
-                month = 'June';
-                break;
-            case '07':
-                month = 'July';
-                break;
-            case '08':
-                month = 'August';
-                break;
-            case '09':
-                month = 'September';
-                break;
-            case '10':
-                month = 'October';
-                break;
-            case '11':
-                month = 'November';
-                break;
-            case '12':
-                month = 'December';
-                break;
-            
-            default:
-                break;
-        }
-        return `${month}, ${year}`;
-    }
 
     useEffect(() => {
         dispatch(spotActions.fetchSpot(spotId))
@@ -115,7 +70,15 @@ function SpotSolo() {
                                     </div>
                                 )}
                             </div>
-                            <button id='spotBooking'>Reserve</button>
+                            {/* <button id='spotBooking'>Reserve</button> */}
+                            <OpenModalButton 
+                                modalComponent={<BookingEditModal 
+                                    spotId={spot.id}
+                                    isBookingPage={true}
+                                />} // component to render inside the modal
+                                buttonText={'Reserve'} // text of the button that opens the modal
+                                id={'spotBooking'}
+                            />
                         </div>
                     </div>
                     <div id='spotReviewsConBelow'>

@@ -1,0 +1,43 @@
+#bookingsUserContainer {
+    padding: 0rem 5rem;
+}
+
+#bookingUserTitle {
+
+}
+
+#bookingsCon {
+    display: flex;
+    gap: 2rem;
+}
+
+.bookingUser {
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #b0b0b0f0;
+    overflow: hidden;
+    margin: 2rem 0rem;
+}
+
+.bookingUserName {
+    margin: 0rem 0rem .5rem .5rem;
+}
+
+.bookingImage {
+    height: 15rem;
+    width: 15rem;
+    /* margin: .1rem; */
+    object-fit: cover;
+    border-radius: 1px;
+}
+
+.bookingDate {
+    color: rgb(87, 87, 87);
+    margin: .1rem 0rem .1rem .5rem;
+}
+
+.bookingButtons {
+    display: flex;
+    justify-content: flex-start;
+    gap: .5rem;
+    margin: .5rem 1rem .8rem;
+}
